@@ -1,0 +1,44 @@
+<div class="its-card">
+  <h3 class="card-header ps-3">Finish Goods</h3>
+
+  <div class="finish-goods card-body flex-center">
+    <mat-spinner *ngIf=showSpinner diameter=125></mat-spinner>
+  
+    <div *ngIf=!showSpinner>
+        <div class="cloths mt-10">
+          <dx-data-grid id="gridContainer" #grid
+                  [dataSource]="viewFinishGoodsData"
+                  keyExpr="unique_id"
+                  [showBorders]="true"
+                  [rowAlternationEnabled]="true"
+                  [allowColumnResizing]="true"
+                  [allowColumnReordering]="true"
+                  [selectedRowKeys]="[]"
+                >
+            <dxo-scrolling mode="virtual"></dxo-scrolling>
+            <dxo-selection mode="single"></dxo-selection>
+            <dxo-filter-row [visible]="true"></dxo-filter-row>
+            <dxo-header-filter [visible]="true"></dxo-header-filter>
+            <dxo-column-chooser [enabled]="true" mode="select" [allowSearch]="true"></dxo-column-chooser>
+
+            <dxo-group-panel [visible]="true"></dxo-group-panel>
+            <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+    
+            <dxi-column dataField="brand" caption="Brand" alignment="center"></dxi-column>
+            <dxi-column dataField="product" caption="Product" alignment="center"></dxi-column>
+            <dxi-column dataField="design" caption="Design" alignment="center"></dxi-column>
+            <dxi-column dataField="avl_qty" caption="Quantity" alignment="center"></dxi-column>  
+            
+            <dxi-column caption="Dispatch History" cellTemplate="cellTemplateHyperlink" alignment="center"></dxi-column>  
+            <div *dxTemplate="let data of 'cellTemplateHyperlink'" >
+              <a [routerLink]="['../dispatch-history']" routerLinkActive="sub-active" (click)="getSelectedData(data)"><mat-icon>remove_red_eye</mat-icon></a>           
+            </div>
+    
+            <dxo-search-panel [visible]="true"></dxo-search-panel>
+            <dxo-paging [pageSize]="10"> </dxo-paging>              
+          </dx-data-grid>       
+        </div>
+      </div>
+  </div>
+
+</div>

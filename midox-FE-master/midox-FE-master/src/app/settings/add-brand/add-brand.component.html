@@ -1,0 +1,143 @@
+<div class="its-card">
+  <h3 class="card-header ps-3">Add Brand</h3>
+  <div class="row settings-comp">
+    
+  <div class="form-input-sticky">
+    <form [formGroup]="brandForm" (ngSubmit)="onSubmit()">
+      <div class="row">        
+          <div class="form-group col-3">
+            <label for="brandName">Brand</label>
+            <input type="text" id="brandName" formControlName="brandName" class="form-control"/>
+            <div *ngIf="brandForm.get('brandName')?.invalid && brandForm.get('brandName')?.touched" class="error invalid-red">
+              <div *ngIf="brandForm.get('brandName')?.errors?.['required']">
+                Brand name is required.
+              </div>
+              <div *ngIf="brandForm.get('brandName')?.errors?.['minlength']">
+                Brand name must be at least 3 characters long.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-3">
+            <label for="contactPerson">Contact Person</label>
+            <input type="text" id="contactPerson" formControlName="contactPerson" class="form-control"/>
+            <div *ngIf="brandForm.get('contactPerson')?.invalid && brandForm.get('contactPerson')?.touched" class="error invalid-red">
+              <div *ngIf="brandForm.get('contactPerson')?.errors?.['required']">
+                Contact person is required.
+              </div>
+              <div *ngIf="brandForm.get('contactPerson')?.errors?.['minlength']">
+                Contact Person must be at least 3 characters long.
+              </div>
+            </div>
+          </div>          
+      
+          <div class="form-group col-3">
+            <label for="contactNo">Mobile Number (+91)</label>
+            <input type="text" id="contactNo" formControlName="contactNo" maxlength="10" class="form-control"/>
+            <div *ngIf="brandForm.get('contactNo')?.invalid && brandForm.get('contactNo')?.touched" class="error invalid-red">        
+              <div *ngIf="brandForm.get('contactNo')?.errors?.['required']">
+                Mobile number is required
+              </div>
+              <div *ngIf="brandForm.get('contactNo')?.errors?.['pattern']">
+                It only accept numbers
+              </div>
+              <div *ngIf="brandForm.get('contactNo')?.errors?.['minlength']">
+                Mobile number should be 10 digits long.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-3">
+            <label for="brandUID">GSTIN</label>
+            <input type="text" id="brandUID" formControlName="brandUID" maxlength="15" class="form-control"/>
+            <div *ngIf="brandForm.get('brandUID')?.invalid && brandForm.get('brandUID')?.touched" class="error invalid-red">
+              Invalid GSTIN. It should be 15 alphanumeric characters long.
+            </div>
+          </div>
+      
+          <div class="form-group col-3">
+            <label for="email">Email</label>
+            <input type="email" id="email" formControlName="email" class="form-control"/>
+            <div *ngIf="brandForm.get('email')?.invalid && brandForm.get('email')?.touched" class="error invalid-red">
+              Invalid email address.
+            </div>
+          </div>
+      
+          <div class="form-group col-3">
+            <label for="address">Address</label>
+            <!-- <input type="text" id="address" formControlName="address" /> -->
+            <textarea name="" id="address" cols="30" rows="1" formControlName="address" class="form-control"></textarea>
+            <div *ngIf="brandForm.get('address')?.invalid && brandForm.get('address')?.touched" class="error invalid-red">
+              Address is required.
+            </div>
+          </div>
+      
+          <div class="form-group col-3">
+            <label for="description">Description</label>
+            <!-- <input type="text" id="description" formControlName="description" /> -->
+            <textarea name="" id="description" cols="30" rows="1" formControlName="description" class="form-control"></textarea>
+            <div *ngIf="brandForm.get('description')?.invalid && brandForm.get('description')?.touched" class="error invalid-red">
+              Description is required.
+            </div>
+          </div> 
+
+          <div class="form-group col-3">
+            <label for="status">Status </label>
+              <select id="status" formControlName="status" class="form-control">
+                <option value="">Select</option>
+                <option *ngFor="let option of dropDownValue" [value]="option">{{ option }}</option>
+              </select>
+            <div *ngIf="brandForm.get('status')?.invalid && brandForm.get('status')?.touched" class="error invalid-red">
+              Please enter a valid text.
+            </div>
+          </div>
+      </div>
+
+      <div class="form-group mt-3">
+        <button type="submit" mat-flat-button color="primary" [disabled]="brandForm.invalid">
+          {{ editedMaterialIndex !== null ? 'Update Brand'  : 'Add Brand' }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+    
+  <div class="flex-center">
+    <mat-spinner *ngIf="showSpinner" diameter=125></mat-spinner>
+  </div> 
+    <!-- <div class="row col-12 p-3"> -->
+      <!-- <table class="table table-bordered table-striped mt-4"> -->
+      <table class="table" *ngIf=!showSpinner>
+        <thead>
+          <tr>
+            <th class="text-center">Brand</th>
+            <th class="text-center">Cont. Person</th>
+            <th class="text-center">Mobile</th>
+            <th class="text-center">GSTIN</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Address</th>
+            <th class="text-center">Description</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let brand of brands; let i = index">
+            <td class="text-center">{{ brand.brandName }}</td>
+            <td class="text-center">{{ brand.contactPerson }}</td>
+            <td class="text-center">{{ brand.contactNo }}</td>
+            <td class="text-center">{{ brand.brandUID }}</td>
+            <td class="text-center">{{ brand.email }}</td>
+            <td class="text-center">{{ brand.address }}</td>
+            <td class="text-center">{{ brand.description }}</td>
+            <td>
+              <button (click)="edit(brand,i)" class="btn btn-sm me-2 btn-primary">Edit</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    <!-- </div> -->
+  </div> 
+</div>
+      

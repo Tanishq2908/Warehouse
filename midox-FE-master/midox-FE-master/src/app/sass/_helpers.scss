@@ -1,0 +1,280 @@
+@import './variables';
+
+// Padding classes 
+// [{Padding-top = pt-} {Padding-bottom = pb-} {Padding-left = pl-} {Padding-right = pr-}]
+// [{Padding-top/bottom = ptb-} {Padding-left/right = plr-}]
+// -----------------------------------------------------------------------------------------------------------------
+//padding all side
+.p-10{
+    padding: 10px;
+}
+.p-16{
+    padding: 16px;
+}
+// Top
+.pt-10{
+    padding-top:10px;
+}
+.pt-20{
+    padding-top:20px;
+}
+.pt-30{
+    padding-top:30px;
+}
+// Bottom
+.pb-10{
+    padding-bottom:10px;
+}
+.pb-30{
+    padding-bottom:30px;
+}
+// Left
+.pl-10{
+    padding-left:10px;
+}
+// Right
+.pr-10{
+    padding-right:10px;
+}
+// Top / Bottom
+.ptb-10{
+    padding-top:10px;
+    padding-bottom:10px;
+}
+// Left / Right
+.plr-10{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+// Margin classes 
+// [{Margin-top = mt-} {Margin-bottom = mb-} {Margin-left = ml-} {Margin-right = mr-}]
+// [{Margin-top/bottom = mtb-} {Margin-left/right = mlr-}]
+// -----------------------------------------------------------------------------------------------------------------
+// Top
+.mt-10{
+    margin-top:10px;
+}
+.mt-20{
+    margin-top:20px;
+}
+.mt-30{
+    margin-top:30px;
+}
+.mt-40{
+    margin-top:40px;
+}
+// Bottom
+.mb-10{
+    margin-bottom:10px;
+}
+.mb-30{
+    margin-bottom: 30px;
+}
+.mb-50{
+    margin-bottom: 50px;
+}
+.mb-100{
+    margin-bottom: 100px;
+}
+// Left
+.ml-10{
+    margin-left:10px;
+}
+// Right
+.mr-10{
+    margin-right:10px;
+}
+.mr-50{
+    margin-right:50px;
+}
+// Top / Bottom
+.mtb-10{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+// Left / Right
+.mlr-10{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.mlr-rem-1{
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+.mlr-rem-2{
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+
+
+//width classess
+//------------------------------------------------------------------------------------------------------------------------------
+.wp-100{
+    width: 100%;
+}
+.wp-85{
+    width: 85%;
+}
+.wp-80{
+    width: 80%;
+}
+.wp-65{
+    width: 65%;
+}
+.wp-60{
+    width: 60%;
+}
+.wp-55{
+    width: 55%;
+}
+.wp-50{
+    width: 50%;
+}
+.wp-45{
+    width: 45%;
+}
+.wp-40{
+    width: 40%;
+}
+.wp-20{
+    width: 20%;
+}
+.wp-15{
+    width: 15%;
+}
+
+//height
+.hv-100 {
+    height: 100vh;
+}
+.hv-96 {
+    height: 96vh;
+}
+.hv-95 {
+    height: 95vh;
+}
+.hv-90 {
+    height: 90vh;
+}
+.hv-85 {
+    height: 85vh;
+}
+.hv-80 {
+    height: 80vh;
+}
+.hv-70 {
+    height: 70vh;
+}
+.hv-60 {
+    height: 60vh;
+}
+.hv-55 {
+    height: 55vh;
+}
+.hv-50 {
+    height: 50vh;
+}
+.hv-40 {
+    height: 40vh;
+}
+.hv-30 {
+    height: 30vh;
+}
+.h-40 {
+    height: 40%;
+}
+
+//Center
+.flex-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.flex-row{
+    display: flex;
+    flex-direction: row;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.invalid-red{
+    color: red;
+}
+
+
+.its-card .card-header{
+    padding: 6px 10px;
+    background-color: $primary-color;
+    border-bottom: 1px solid $primary-color;
+    height: auto;
+}
+.its-card{
+    margin: 1rem;
+    border: 1px solid $primary-color;
+    border-radius: 5px;
+    padding-bottom: 1rem;
+}
+
+.card-header{
+    color: white;
+    margin-bottom: 0.3rem;
+}
+
+.card-body{
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.settings-comp{
+    height: 75vh;
+    overflow: auto;
+}
+
+.col-6, .col-3{
+    margin-bottom: 10px;
+}
+
+.form-input-sticky{
+    background-color: white;
+    position: sticky;
+    top: 0;
+    padding: 1rem;
+    z-index: 999;
+}
+
+.add-things{
+    // color: $primary-color;
+    background-color: $primary-color;
+    color: $white;
+}
+
+
+//font
+
+.fs-14 {
+    font-size: 14px;
+}
+
+// For extra small btn
+.btn-group-xs > .btn, .btn-xs {
+    padding: .25rem .4rem;
+    font-size: .875rem;
+    line-height: .5;
+    border-radius: .2rem;
+  }
+
+  .main-parent{
+    .its-card{
+        // background-color: lightblue;
+        height: 94vh !important;
+        .settings-comp{
+            height: 84vh !important;
+            // background-color: lightcoral;
+        }
+    }
+}

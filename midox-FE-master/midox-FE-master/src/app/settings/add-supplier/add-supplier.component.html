@@ -1,0 +1,145 @@
+<div class="its-card">
+  <h3 class="card-header ps-3">Add Supplier</h3>
+  <div class="row settings-comp">
+    
+  <div class="form-input-sticky">
+    <form [formGroup]="supplierForm" (ngSubmit)="onSubmit()">
+      <div class="row">        
+          <div class="form-group col-3">
+            <label for="supplierName">Supplier Name:</label>
+            <input type="text" id="supplierName" formControlName="supplierName" class="form-control"/>
+            <div *ngIf="supplierForm.get('supplierName')?.invalid && supplierForm.get('supplierName')?.touched" class="error invalid-red">
+              <div *ngIf="supplierForm.get('supplierName')?.errors?.['required']">
+                Supplier name is required.
+              </div>
+              <div *ngIf="supplierForm.get('supplierName')?.errors?.['minlength']">
+                Supplier name must be at least 3 characters long.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-3">
+            <label for="contactPerson">Contact Person:</label>
+            <input type="text" id="contactPerson" formControlName="contactPerson" class="form-control"/>
+            <div *ngIf="supplierForm.get('contactPerson')?.invalid && supplierForm.get('contactPerson')?.touched" class="error invalid-red">
+              <div *ngIf="supplierForm.get('contactPerson')?.errors?.['required']">
+                Contact person is required.
+              </div>
+              <div *ngIf="supplierForm.get('contactPerson')?.errors?.['minlength']">
+                Contact Person must be at least 3 characters long.
+              </div>
+            </div>
+          </div>          
+      
+          <div class="form-group col-3">
+            <label for="contactNo">Mobile Number: (+91)</label>
+            <input type="text" id="contactNo" formControlName="contactNo" maxlength="10" class="form-control"/>
+            <div *ngIf="supplierForm.get('contactNo')?.invalid && supplierForm.get('contactNo')?.touched" class="error invalid-red">        
+              <div *ngIf="supplierForm.get('contactNo')?.errors?.['required']">
+                Mobile number is required
+              </div>
+              <div *ngIf="supplierForm.get('contactNo')?.errors?.['pattern']">
+                It only accept numbers
+              </div>
+              <div *ngIf="supplierForm.get('contactNo')?.errors?.['minlength']">
+                Mobile number should be 10 digits long.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-3">
+            <label for="supplierUID">GSTIN:</label>
+            <input type="text" id="supplierUID" formControlName="supplierUID" maxlength="15" class="form-control"/>
+            <div *ngIf="supplierForm.get('supplierUID')?.invalid && supplierForm.get('supplierUID')?.touched" class="error invalid-red">
+              Invalid GSTIN. It should be 15 alphanumeric characters long.
+            </div>
+          </div>
+      
+          <div class="form-group col-3">
+            <label for="email">Email:</label>
+            <input type="email" id="email" formControlName="email" class="form-control"/>
+            <div *ngIf="supplierForm.get('email')?.invalid && supplierForm.get('email')?.touched" class="error invalid-red">
+              Invalid email address.
+            </div>
+          </div>
+      
+          <div class="form-group col-3">
+            <label for="address">Address:</label>
+            <!-- <input type="text" id="address" formControlName="address" /> -->
+            <textarea name="" id="address" cols="30" rows="1" formControlName="address" class="form-control"></textarea>
+            <div *ngIf="supplierForm.get('address')?.invalid && supplierForm.get('address')?.touched" class="error invalid-red">
+              Address is required.
+            </div>
+          </div>
+      
+          <div class="form-group col-3">
+            <label for="description">description:</label>
+            <!-- <input type="text" id="description" formControlName="description" /> -->
+            <textarea name="" id="description" cols="30" rows="1" formControlName="description" class="form-control"></textarea>
+            <div *ngIf="supplierForm.get('description')?.invalid && supplierForm.get('description')?.touched" class="error invalid-red">
+              description is required.
+            </div>
+          </div> 
+
+          <div class="form-group col-3">
+            <label for="status">Status </label>
+              <select id="status" formControlName="status" class="form-control">
+                <option value="">Select</option>
+                <option *ngFor="let option of dropDownValue" [value]="option">{{ option }}</option>
+              </select>
+            <div *ngIf="supplierForm.get('status')?.invalid && supplierForm.get('status')?.touched" class="error invalid-red">
+              Please enter a valid text.
+            </div>
+          </div>
+      </div>
+
+      <div class="form-group mt-3">
+        <button type="submit" mat-flat-button color="primary" [disabled]="supplierForm.invalid">
+          {{ editedMaterialIndex !== null ? 'Update Supplier' : 'Add Supplier' }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+    
+  <div class="flex-center">
+    <mat-spinner *ngIf="showSpinner" diameter=125></mat-spinner>
+  </div> 
+    <!-- <div class="row col-12 p-3"> -->
+      <!-- <table class="table table-bordered table-striped mt-4"> -->
+      <table class="table" *ngIf=!showSpinner>
+        <thead>
+          <tr>
+            <th class="text-center">Supplier Name</th>
+            <th class="text-center">Contact Person</th>
+            <th class="text-center">Mobile Number</th>
+            <th class="text-center">GSTIN</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Address</th>
+            <th class="text-center">Description</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let supplier of suppliers; let i = index">
+            <td class="text-center">{{ supplier.supplierName }}</td>
+            <td class="text-center">{{ supplier.contactPerson }}</td>
+            <td class="text-center">{{ supplier.contactNo }}</td>
+            <td class="text-center">{{ supplier.supplierUID }}</td>
+            <td class="text-center">{{ supplier.email }}</td>
+            <td class="text-center">{{ supplier.address }}</td>
+            <td class="text-center">{{ supplier.description }}</td>
+            <td>
+              <button (click)="edit(supplier,i)" class="btn btn-sm me-2 btn-primary">Edit</button>
+              <!-- <button (click)="deleteSupplier(supplier)" class="btn btn-sm btn-danger" [disabled]="deleteBtnDisabled">Delete</button> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    <!-- </div> -->
+  </div> 
+</div>
+      
+    

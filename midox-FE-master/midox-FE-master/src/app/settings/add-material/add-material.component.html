@@ -1,0 +1,48 @@
+<div class="its-card">
+<h3 class="card-header ps-3 ">Add Material</h3>
+
+<div class="settings-comp">
+  
+  <div class="form-input-sticky">
+    <form [formGroup]="materialForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Material Name</label>
+        <input type="text" id="name" formControlName="name" class="form-control">
+        <div *ngIf="materialForm.get('name')?.invalid && materialForm.get('name')?.touched" class="error invalid-red">
+          Please enter a valid text.
+        </div>
+      </div> 
+      <div class="form-group mt-3">
+        <button type="submit" mat-flat-button color="primary" [disabled]="materialForm.invalid">
+          {{ editedMaterialIndex !== null ? 'Update Material' : 'Add Material' }}
+        </button>
+      </div>
+    </form>
+  </div>
+  
+  <div class="flex-center">
+    <mat-spinner *ngIf="showSpinner" diameter=125></mat-spinner>
+  </div> 
+  <table class="table mt-4" *ngIf=!showSpinner>
+    <thead>
+      <tr>
+        <th>Material Name</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let material of materials; let i = index">
+        <td>{{ material.displayValue }}</td>
+        <td>
+          <button (click)="edit(material, i)" class="btn btn-sm me-2 btn-primary">Edit</button>
+          <button (click)="delete(material)" class="btn btn-sm btn-danger" [disabled]="deleteBtnDisabled">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table> 
+
+</div>
+
+
+</div>
+  

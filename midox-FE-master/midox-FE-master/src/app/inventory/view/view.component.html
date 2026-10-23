@@ -1,0 +1,122 @@
+<div class="its-card">
+  <h3 class="card-header ps-3">View Stock</h3>
+  <div class="view card-body flex-center">
+    <mat-spinner *ngIf=showSpinner diameter=125></mat-spinner>
+  
+    <div *ngIf=!showSpinner class="accordion w-100" id="accordionPanelsStayOpenExample">
+      <div class="cloths mt-10">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+            <button
+              class="accordion-button"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#panelsStayOpen-collapseOne"
+              aria-expanded="true"
+              aria-controls="panelsStayOpen-collapseOne"
+            >
+              Material
+            </button>
+          </h2>
+          <div
+            id="panelsStayOpen-collapseOne"
+            class="accordion-collapse collapse show"
+            aria-labelledby="panelsStayOpen-headingOne"
+          >
+            <div class="accordion-body">
+              <dx-data-grid
+                id="gridContainer"
+                [dataSource]="viewClothData"
+                [showBorders]="true"
+                [rowAlternationEnabled]="true"
+                [allowColumnResizing]="true"
+                [allowColumnReordering]="true"
+                (onExporting)="onExporting($event)"
+              >
+              <dxo-scrolling mode="virtual"></dxo-scrolling>
+                <dxo-filter-row [visible]="true"></dxo-filter-row>
+                <dxo-header-filter [visible]="true"></dxo-header-filter>
+                <dxo-column-chooser [enabled]="true" mode="select" [allowSearch]="true"></dxo-column-chooser>
+
+                <dxo-group-panel [visible]="true"></dxo-group-panel>
+                <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+  
+                <dxi-column dataField="materialCd.displayValue" caption="Material"></dxi-column>
+                <dxi-column dataField="subcategoryCd.displayValue" caption="Sub Category"></dxi-column>
+                <dxi-column dataField="unit.displayValue" caption="Measuring Unit"></dxi-column>
+                <dxi-column dataField="availableQuantity" caption="Available Qty"  alignment="left"></dxi-column>  
+                <dxi-column dataField="billNo" caption="Bill Number" [visible]="false"></dxi-column>
+                <dxi-column dataField="billDate" caption="Date" [visible]="false"></dxi-column>
+                <dxi-column dataField="packing_slip_number" caption="Packing Slip Number" [visible]="false"></dxi-column>
+                <dxi-column dataField="supplier" caption="Supplier Name" [visible]="false"></dxi-column>
+                <!-- <dxi-column dataField="materialCd" caption="Material" [visible]="false"></dxi-column> -->
+                <dxi-column dataField="colorFabricCd.displayValue" caption="Color Fabric Code"></dxi-column>
+                
+                <dxi-column caption="Stock History" cellTemplate="cellTemplateHyperlink" alignment="center"></dxi-column>  
+                <div *dxTemplate="let data of 'cellTemplateHyperlink'" >
+                  <a [routerLink]="['../stock-history']" routerLinkActive="sub-active" (click)="getSelectedData(data)"><mat-icon>remove_red_eye</mat-icon></a>           
+                </div>
+  
+                <dxo-search-panel [visible]="true"></dxo-search-panel>
+                <dxo-export [enabled]="true" [allowExportSelectedData]="false"></dxo-export>
+              </dx-data-grid>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- <div class="accessories mt-20">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+            <button
+              class="accordion-button"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#panelsStayOpen-collapseTwo"
+              aria-expanded="false"
+              aria-controls="panelsStayOpen-collapseTwo"
+            >
+              Accessories
+            </button>
+          </h2>
+          <div
+            id="panelsStayOpen-collapseTwo"
+            class="accordion-collapse collapse show"
+            aria-labelledby="panelsStayOpen-headingTwo"
+          >
+            <div class="accordion-body">
+              <dx-data-grid
+                id="gridContainer"
+                [dataSource]="viewAccesoriesData"
+                [showBorders]="true"
+                [rowAlternationEnabled]="true"
+                [allowColumnResizing]="true"
+                [allowColumnReordering]="true"                
+                (onExporting)="onExporting($event)"
+              >
+              <dxo-scrolling mode="virtual"></dxo-scrolling>
+                <dxo-filter-row [visible]="true"></dxo-filter-row>
+                <dxo-header-filter [visible]="true"></dxo-header-filter>
+
+                <dxo-group-panel [visible]="true"></dxo-group-panel>
+                <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+  
+                <dxi-column dataField="accessories" caption="Accessories"></dxi-column>
+                <dxi-column dataField="amount" caption="Amount"></dxi-column>
+                <dxi-column dataField="avl_amount" caption="Available Amount"></dxi-column>
+                
+                <dxi-column caption="Stock History" cellTemplate="cellTemplateHyperlink" alignment="center"></dxi-column>  
+                <div *dxTemplate="let data of 'cellTemplateHyperlink'" >
+                  <a [routerLink]="['../stock-history']" routerLinkActive="sub-active" (click)="getSelectedData(data)"><mat-icon>remove_red_eye</mat-icon></a>           
+                </div>
+  
+                <dxo-search-panel [visible]="true"></dxo-search-panel>
+              </dx-data-grid>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>
+

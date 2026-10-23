@@ -1,0 +1,29 @@
+.details-adda-parent{
+    .left{
+        // background-color: lightcoral;
+        .material{
+            // background-color: lightcoral;
+        }
+        .pattern{
+            // background-color: goldenrod;
+        }
+    }
+    .right{
+        // background-color: lightgreen;
+    }
+}
+.table {
+    .its-card{
+        height: 58vh;
+    }
+    .cloths{
+        // background-color: red;
+        max-height: 48vh;
+        overflow: auto;
+    
+        .pattern-name {
+            font-size: 14px;
+        }
+    }
+}
+

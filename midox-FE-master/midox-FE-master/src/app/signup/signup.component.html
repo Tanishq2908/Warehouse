@@ -1,0 +1,75 @@
+<div class="its-card">
+    <h3 class="card-header ps-3">Add User</h3>
+    <div class="row pt-3">
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+            <div class="row sign-up">
+                <div class="col-6">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" formControlName="username" class="form-control">
+                    <div *ngIf="formControls.username.touched && formControls.username.errors" class="invalid-red">
+                        <div *ngIf="formControls.username.errors.required">Username is required.</div>
+                        <div *ngIf="formControls.username.errors.minlength">Username should be at least 6 characters
+                            long.</div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" formControlName="fullName" class="form-control">
+                    <div *ngIf="formControls.fullName.touched && formControls.fullName.errors" class="invalid-red">
+                        <div *ngIf="formControls.fullName.errors.required">Full Name is required.</div>
+                        <div *ngIf="formControls.fullName.errors.minlength">Full Name should be at least 3 characters
+                            long.</div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" formControlName="password" class="form-control">
+                    <div *ngIf="formControls.password.touched && formControls.password.errors" class="invalid-red">
+                        <div *ngIf="formControls.password.errors.required">Password is required.</div>
+                        <div *ngIf="formControls.password.errors.minlength">Password should be at least 8 characters
+                            long.</div>
+                    </div>
+                </div>
+
+                <div class="col-6 mt-3 d-flex align-items-center">
+                    <input type="checkbox" id="isAdmin" formControlName="isAdmin">
+                    <label for="isAdmin" class="ms-2">Check if user is admin</label>
+                </div>
+
+                <div class="col-6">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" formControlName="dob" class="form-control">
+                    <div *ngIf="formControls.dob.touched && formControls.dob.errors" class="invalid-red">
+                        <div *ngIf="formControls.dob.errors.required">Date of Birth is required.</div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <label for="mobileNumber">Mobile Number</label>
+                    <input type="text" id="mobileNumber" formControlName="mobileNumber" class="form-control"
+                        maxlength="10">
+                    <div *ngIf="formControls.mobileNumber.invalid && formControls.mobileNumber.touched"
+                        class="invalid-red">
+                        <div *ngIf="formControls.mobileNumber.errors.required">Employee Mobile is required.</div>
+                        <div *ngIf="formControls.mobileNumber.errors.pattern">Mobile Number should only contain digits
+                        </div>
+                        <div *ngIf="formControls.mobileNumber.errors.minlength">Password should be at least 10
+                            characters long.</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-12 text-end">
+                    <button type="button" mat-flat-button color="warning" (click)="onClear()"
+                        class="mr-10">Clear</button>
+                    <button type="submit" mat-flat-button color="primary"
+                        [disabled]="signupForm.invalid">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

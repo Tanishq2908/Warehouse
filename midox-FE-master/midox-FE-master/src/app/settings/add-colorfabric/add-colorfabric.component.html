@@ -1,0 +1,62 @@
+<div class="its-card">
+    <h3 class="card-header ps-3">Add Color Fabric</h3>
+    <div class="flex-center">
+      <mat-spinner *ngIf="showSpinner" diameter=125></mat-spinner>
+    </div>
+    <div class="settings-comp" *ngIf="!showSpinner">
+      <div class="form-input-sticky">
+        <form [formGroup]="colorFabricForm" (ngSubmit)="onSubmit()">
+          <div class="form-group col-6">
+            <label for="name">Colour Name  </label>
+              <select id="name" formControlName="name" class="form-control">
+                <option value="">Select</option>
+                <option *ngFor="let option of dropDownValue" [value]="option?.entityCd">{{ option?.displayValue }}</option>
+              </select>
+  
+            <div *ngIf="colorFabricForm.get('name')?.invalid && colorFabricForm.get('name')?.touched" class="error invalid-red">
+              Please enter a valid text.
+            </div>
+          </div>
+          <div class="form-group mt-2">
+            <label for="code">Color Fabric Code</label>
+            <input type="text" id="code" formControlName="code" class="form-control">
+            <div *ngIf="colorFabricForm.get('code')?.invalid && colorFabricForm.get('code')?.touched" class="error invalid-red">
+              Please enter a valid text.
+            </div>
+          </div> 
+          <div class="form-group mt-3">
+            <button type="submit" [disabled]="colorFabricForm.invalid" mat-flat-button color="primary">
+              {{ editedColorFabricIndex !== null ? 'Update Color Fabric' : 'Add Color Fabric' }}
+            </button>
+          </div>
+        </form>
+
+      </div>
+      
+      <div class="flex-center">
+        <mat-spinner *ngIf="showSpinnerTable" diameter=125></mat-spinner>
+      </div>
+      <table class="table mt-4" *ngIf="!showSpinnerTable">
+        <thead>
+          <tr>
+            <th>Color Name</th>
+            <th>Color Code</th>
+            <th>Action</th>
+          </tr>
+        </thead> 
+        <tbody>
+          <tr *ngFor="let data of colorFabricArray; let i = index">
+            <td>{{ data.parentDisplayValue }}</td>
+            <td>{{ data.displayValue }}</td>
+            <td>
+              <button (click)="edit(data, i)" class="btn btn-sm me-2 btn-primary">Edit</button>
+              <button (click)="delete(data)" class="btn btn-sm btn-danger" [disabled]="deleteBtnDisabled">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    </div>
+      
+    

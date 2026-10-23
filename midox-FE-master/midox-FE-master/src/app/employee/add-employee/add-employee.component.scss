@@ -1,0 +1,41 @@
+.add-employee {
+    .col-6{
+        // margin-bottom: 20px;
+    }
+}
+// .settings-comp {
+// //     padding: 20px 15px;
+//     width: 100%;
+// }
+
+// .table th, td {
+//     padding: 0.5rem 1.5rem !important;
+// }
+
+.add-employee{
+    .its-card{
+        // background-color: lightblue;
+        height: 94vh !important;
+        .settings-comp{
+            height: 84vh !important;
+            // background-color: lightcoral;
+        }
+    }
+}
+
+@import '../../sass/variables';
+
+:host ::ng-deep .dx-datagrid-headers{
+    background-color: $primary-color;
+    color: $white;
+}
+
+#gridContainer{
+    max-height: 72vh;
+}
+
+.mat-icon {
+    font-size: 25px;
+    color: #000;
+    cursor: pointer;
+}

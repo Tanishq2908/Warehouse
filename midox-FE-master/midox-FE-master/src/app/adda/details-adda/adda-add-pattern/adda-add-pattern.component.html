@@ -1,0 +1,97 @@
+<!-- 
+<div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Add Pattern</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      ...
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-primary">Save changes</button>
+    </div>
+  </div> -->
+
+  
+  <div class="modal-content"> 
+    <div class="its-card">
+      <h3 class="card-header ps-3 d-flex justify-content-between">
+        <span>{{addaPatternTitle}}</span>
+        <button type="button" class="btn-close" (click)="resetForm()" id="addAddaPatternBtn" data-bs-dismiss="modal" aria-label="Close"></button>
+      </h3>
+    
+      <div class="modal-body">
+        <div class="finish-goods card-body flex-center">        
+          <div class="flex-center">
+            <mat-spinner *ngIf=showSpinner diameter=125></mat-spinner>
+          </div> 
+          <div class="add-material-adda" *ngIf="!showSpinner">              
+            <div [formGroup]="patternAddaAddForm">
+              <div class="row"> 
+                <!-- Color -->
+                <div class="form-group col-6">
+                  <label for="color">Select Color:*</label>
+                  <select id="color" formControlName="color" class="form-control">              
+                    <option value="">Select</option>
+                    <option *ngFor="let option of colorArray" [value]="option.entityCd">{{ option?.displayValue }}</option>
+                  </select>
+                  <div *ngIf="patternAddaAddForm.get('color')?.invalid && patternAddaAddForm.get('color')?.touched">
+                    <span style="color: red;">Color is required.</span>
+                  </div>
+                </div>
+
+                <!-- Size -->
+                <div class="form-group col-6">
+                  <label for="size">Select Size:*</label>
+                  <select id="size" formControlName="size" class="form-control">              
+                    <option value="">Select</option>
+                    <option *ngFor="let option of sizeArray" [value]="option.entityCd">{{ option?.displayValue }}</option>
+                  </select>
+                  <div *ngIf="patternAddaAddForm.get('size')?.invalid && patternAddaAddForm.get('size')?.touched">
+                    <span style="color: red;">Size is required.</span>
+                  </div>
+                </div>        
+
+                <!-- Quantity -->
+                <div class="form-group col-6">
+                  <label for="quantity">Quantity*</label>
+                  <input type="number" id="quantity" formControlName="quantity" class="form-control">
+                  <div *ngIf="patternAddaAddForm.get('quantity')?.invalid && patternAddaAddForm.get('quantity')?.touched" class="invalid-red">
+                    <div *ngIf="patternAddaAddForm.get('quantity')?.errors?.['required']">Quantity is required.</div>
+                    <div *ngIf="patternAddaAddForm.get('quantity')?.errors?.['min']">Quantity must be at least 1.</div>
+                  </div>
+                </div>
+
+                <!-- Bundle -->
+                <div class="form-group col-6">
+                  <label for="bundleSize">Bundle Size*</label>
+                  <input type="number" id="bundleSize" formControlName="bundleSize" class="form-control">
+                  <div *ngIf="patternAddaAddForm.get('bundleSize')?.invalid && patternAddaAddForm.get('bundleSize')?.touched" class="invalid-red">
+                    <div *ngIf="patternAddaAddForm.get('bundleSize')?.errors?.['required']">Bundle Size is required.</div>
+                    <div *ngIf="patternAddaAddForm.get('bundleSize')?.errors?.['min']">Bundle Size must be at least 1.</div>
+                  </div>
+                </div>
+
+                
+              <div class="row">
+                <div class="col-12 text-end">
+                  <button type="submit" (click)="onSubmit()" [disabled]="patternAddaAddForm.invalid" mat-flat-button color="primary">
+                    Save
+                  </button>
+                </div>
+              </div>
+                <!-- <div class="form-group mt-3">
+                </div>           -->
+              </div>            
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+    </div>

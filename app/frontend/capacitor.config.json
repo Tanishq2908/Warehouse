@@ -1,0 +1,25 @@
+{
+  "appId": "com.warehouse.wms",
+  "appName": "Warehouse",
+  "webDir": "dist",
+  "android": {
+    "buildOptions": {
+      "keystorePath": "release.keystore",
+      "keystorePassword": "warehouse2026",
+      "keystoreAlias": "wms",
+      "keystoreAliasPassword": "warehouse2026",
+      "releaseType": "APK"
+    }
+  },
+  "server": {
+    "androidScheme": "https",
+    "cleartext": true,
+    "allowNavigation": ["*"]
+  },
+  "plugins": {
+    "Filesystem": {
+      "androidDirectory": "Documents"
+    },
+    "Preferences": {}
+  }
+}

@@ -1,0 +1,81 @@
+<div class="its-card">
+    <h3 class="card-header ps-3 d-flex justify-content-between">
+      <span>View Adda</span> 
+      
+      <button class="btn btn-sm me-2 btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal1" (click)="getSelectedData('')">Add Adda</button>
+            
+    </h3>
+  
+    <div class="finish-goods card-body flex-center">
+      
+      <div class="flex-center">
+        <mat-spinner *ngIf=showSpinner diameter=125></mat-spinner>
+      </div> 
+    
+      <div *ngIf=!showSpinner> 
+          <div class="cloths mt-10">
+            <dx-data-grid id="gridContainer"
+                    [dataSource]="addaData"
+                    [showBorders]="true"
+                    [rowAlternationEnabled]="true"
+                    [allowColumnResizing]="true"
+                    [allowColumnReordering]="true"
+                  >
+              <dxo-scrolling mode="virtual"></dxo-scrolling>
+              <dxo-filter-row [visible]="true"></dxo-filter-row>
+              <dxo-header-filter [visible]="true"></dxo-header-filter>
+              <dxo-column-chooser [enabled]="true" mode="select" [allowSearch]="true"></dxo-column-chooser>
+  
+              <dxo-group-panel [visible]="true"></dxo-group-panel>
+              <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+      
+              <dxi-column dataField="addaNo" caption="ADDA Number"></dxi-column>
+              <dxi-column dataField="brandDetails.brandName" caption="Brand"></dxi-column>
+              <dxi-column dataField="productCd.displayValue" caption="Product"></dxi-column>
+              <dxi-column dataField="designNo" caption="Design Number"></dxi-column>  
+              <dxi-column dataField="quantity" caption="Quantity"></dxi-column>  
+              <dxi-column dataField="status.displayValue" caption="Status"></dxi-column>  
+              
+              <dxi-column caption="Edit / Details" cellTemplate="cellTemplateHyperlink" alignment="center"></dxi-column>  
+              <div *dxTemplate="let data of 'cellTemplateHyperlink'">
+                <a data-bs-toggle="modal" data-bs-target="#exampleModal1" (click)="getSelectedData(data)">
+                  <mat-icon class="me-2">edit</mat-icon>
+                </a>  
+                <a [routerLink]="['../details-adda', data?.data?.addaId]" routerLinkActive="sub-active">
+                  <mat-icon class="icon-mat">remove_red_eye</mat-icon>
+                </a>           
+              </div>
+      
+              <dxo-search-panel [visible]="true"></dxo-search-panel>
+              <dxo-paging [pageSize]="10"> </dxo-paging>              
+            </dx-data-grid>       
+          </div>
+        </div>
+
+
+    </div>
+</div>
+      
+<!-- Modal -->
+<div class="modal fade modal-xl" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <!-- <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Adda</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div> -->
+      
+      <div class="modal-body">
+        <app-add-adda [forEditAdda]="editAddaData" (forViewAddReload)="dataFromAddAdda($event)"></app-add-adda>
+      </div>
+      
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="closeModalButton" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="apiCallSaveData()">
+          Save changes          
+        </button>
+      </div> -->
+    </div>
+  </div>        
+</div>
+

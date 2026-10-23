@@ -1,0 +1,32 @@
+@import '../../sass/variables';
+
+.setting-row {
+    box-shadow: 2px 2px 2px -1px #ccc;
+    border-bottom: 1px solid #ccc;
+
+    #setting-nav{
+        background-color: $white !important;
+        #navbarSupportedContent{
+            ul{
+                width: 100%;
+                justify-content: space-evenly;
+                li{
+                    a{
+                        color: $primary-color !important;
+                        justify-content: center;
+                        height: 60px;
+                        align-items: center;
+                        display: flex;
+                    }
+    
+                }
+            }
+    
+        }
+    }
+    
+    .sub-active {
+        font-weight: 700;
+        border-bottom: 2px solid $primary-color;
+    }
+}

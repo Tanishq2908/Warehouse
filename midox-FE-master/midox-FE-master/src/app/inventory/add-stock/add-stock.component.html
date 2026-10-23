@@ -1,0 +1,185 @@
+<div class="its-card">
+  <h3 class="card-header ps-3">Add Stock</h3>
+  <div class="row row-stock">
+    <div class="d-flex justify-content-center">
+      <mat-spinner *ngIf=showSpinner diameter=50></mat-spinner>
+    </div>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <!-- billNumber -->
+      <div class="row add-stock">
+        <div class="col-6">
+          <label for="billNumber">Bill Number*</label>
+          <input class="form-control" type="text" id="billNumber" formControlName="billNumber" required>
+          <div
+            *ngIf="userForm.controls.billNumber.invalid && (userForm.controls.billNumber.dirty || userForm.controls.billNumber.touched)"
+            class="invalid-red">
+            <div *ngIf="userForm.controls.billNumber.errors.required">
+              Bill Number is required.
+            </div>
+            <div *ngIf="userForm.controls.billNumber.errors.minlength">
+              Bill Number must be at least 3 characters long.
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <label for="date">Date*</label>
+          <input type="date" class="form-control" id="date" formControlName="date" required>
+          <div *ngIf="userForm.controls.date.invalid && (userForm.controls.date.dirty || userForm.controls.date.touched)">
+            <div *ngIf="userForm.controls.date.errors.required" class="invalid-red">
+              Date is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <label for="packingSlipNumber">Packing Slip Number*</label>
+          <input type="text" class="form-control" id="packingSlipNumber" formControlName="packingSlipNumber" required>
+          <div
+            *ngIf="userForm.controls.packingSlipNumber.invalid && (userForm.controls.packingSlipNumber.dirty || userForm.controls.packingSlipNumber.touched)"
+            class="invalid-red">
+            <div *ngIf="userForm.controls.packingSlipNumber.errors.required">
+              Packing Slip Number is required.
+            </div>
+            <div *ngIf="userForm.controls.packingSlipNumber.errors.minlength">
+              Packing Slip Number must be at least 3 characters long.
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <label for="supplier">Supplier*</label>
+          <select id="supplier" formControlName="supplier" class="form-control" required
+          (change)="fnForRedirectSettings($event.target)">
+            <option value="">Select</option>
+            <option *ngFor="let option of supplierData" [value]="option.supplierId">{{ option.supplierName }}</option>
+            <option value="add-supplier" class="add-things">Add supplier</option>
+          </select>
+          <div
+            *ngIf="userForm.controls.supplier.invalid && (userForm.controls.supplier.dirty || userForm.controls.supplier.touched)"
+            class="invalid-red">
+            <div *ngIf="userForm.controls.supplier.errors.required">
+              Supplier is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <label for="material">Material*</label>
+          <select id="material" formControlName="material" class="form-control" required 
+          (change)="materialBtnClick($event.target)">
+            <option value="">Select</option>
+            <option *ngFor="let option of materialData" [value]="option.entityCd">{{ option.displayValue }}</option>
+            <option value="add-material" class="add-things">Add material</option>
+          </select>
+          <div
+            *ngIf="userForm.controls.material.invalid && (userForm.controls.material.dirty || userForm.controls.material.touched)"
+            class="invalid-red">
+            <div *ngIf="userForm.controls.material.errors.required">
+              Material is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <label for="subCategory">Sub Category*</label>
+          <select id="subCategory" formControlName="subCategory" class="form-control" required
+          (change)="fnForRedirectSettings($event.target)">
+            <option value="">Select</option>
+            <option *ngFor="let option of (showClothData ? subCategoryClothData : subCategoryAccessoryData)" [value]="option.entityCd">{{ option.displayValue }}</option>
+            <option value="add-subcategory" class="add-things">Add sub category</option>
+          </select>
+          <div
+            *ngIf="userForm.controls.subCategory.invalid && (userForm.controls.subCategory.dirty || userForm.controls.subCategory.touched)"
+            class="invalid-red">
+            <div *ngIf="userForm.controls.subCategory.errors.required">
+              Sub Category is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <label for="colorFabricCode">Color Fabric Code*</label>
+          <select id="colorFabricCode" formControlName="colorFabricCode" class="form-control" required 
+          (change)="fnForRedirectSettings($event.target)">
+            <option value="">Select</option>
+            <option *ngFor="let option of colorFabricCodeData" [value]="option.entityCd">{{ option.displayValue }}</option>
+            <option value="add-color-fabric" class="add-things">Add color fabric code</option>
+          </select>
+          <div
+            *ngIf="userForm.controls.colorFabricCode.invalid && (userForm.controls.colorFabricCode.dirty || userForm.controls.colorFabricCode.touched)"
+            class="invalid-red">
+            <div *ngIf="userForm.controls.colorFabricCode.errors.required">
+              Color Fabric Code is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <label for="measurementType">Measurement Type*</label>
+          <select id="measurementType" formControlName="measurementType" class="form-control" required
+          (change)="fnForRedirectSettings($event.target)">
+            <option value="">Select</option>
+            <option *ngFor="let option of measurementTypeData" [value]="option.entityCd">{{ option.displayValue }}</option>
+            <option value="add-measurement-type" class="add-things">Add measurement type</option>
+          </select>
+          <div
+            *ngIf="userForm.controls.measurementType.invalid && (userForm.controls.measurementType.dirty || userForm.controls.measurementType.touched)"
+            class="invalid-red">
+            <div *ngIf="userForm.controls.measurementType.errors.required">
+              Measurement Type is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <label for="quantity">Quantity*</label>
+          <input type="number" id="quantity" formControlName="quantity" class="form-control">
+          <div *ngIf="userForm.controls.quantity.invalid && userForm.controls.quantity.touched" class="invalid-red">
+            <div *ngIf="userForm.controls.quantity.errors.required">Quantity is required.</div>
+            <div *ngIf="userForm.controls.quantity.errors.min">Quantity must be at least 1.</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <label for="amount">Amount*</label>
+          <input type="number" id="amount" formControlName="amount" class="form-control">
+          <div *ngIf="userForm.controls.amount.invalid && userForm.controls.amount.touched" class="invalid-red">
+            <div *ngIf="userForm.controls.amount.errors.required">Amount is required.</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-end">
+          <button type="button" mat-stroked-button color="primary" [disabled]="userForm.invalid" (click)="addStocks(userForm.value)">{{editStockForm == null ? 'Add' : 'Update'}}</button>
+        </div>
+      </div>
+    </form>
+    <div class="row col-12 p-3">
+      <table class="table table-bordered table-striped mt-4" *ngIf="addStocksList.length">
+        <thead>
+          <tr>
+            <th class="text-center">Material</th>
+            <th class="text-center">Sub Category</th>
+            <th class="text-center">Color Fabric Code</th>
+            <th class="text-center">Measurement Type</th>
+            <th class="text-center">Quantity</th>
+            <th class="text-center">Amount</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of addStocksList; let i = index">
+            <td class="text-center">{{data.material}}</td>
+            <td class="text-center">{{data.subCategory}}</td>
+            <td class="text-center">{{data.colorFabricCode}}</td>
+            <td class="text-center">{{data.measurementType}}</td>
+            <td class="text-center">{{data.quantity}}</td>
+            <td class="text-center">{{data.amount}}</td>
+            <td class="text-center">
+              <mat-icon (click)="setDataInStockForm(data, i)">edit</mat-icon>
+              <mat-icon (click)="deleteStock(i)">delete</mat-icon>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row" *ngIf="addStocksList.length">
+      <div class="col-12 text-end">
+        <button type="button" mat-flat-button color="primary" (click)="submitForm()" [disabled]="addStocksList.length == 0">Save</button>
+      </div>
+    </div>
+  </div>
+
+</div>

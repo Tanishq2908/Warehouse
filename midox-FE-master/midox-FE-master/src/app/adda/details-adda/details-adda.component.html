@@ -1,0 +1,174 @@
+<div class="its-card hv-96  ">
+    <h3 class="card-header ps-3 d-flex justify-content-between">
+      <span>Details Adda</span> 
+    </h3>
+    
+    <div class="finish-goods card-body flex-center">
+        
+      <div class="flex-center">
+        <mat-spinner *ngIf=showSpinner diameter=125></mat-spinner>
+      </div> 
+        <div *ngIf=!showSpinner class="details-adda-parent wp-100">
+            <div class="adda-full-details wp-100">
+                <div class="accordion card-body" id="accordionExample">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                          <strong>Full details</strong>
+                        </button>
+                      </h2>
+                      <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                          <div class="row">
+                            <div class="col-3"><strong class="heading-strong">Adda No :</strong> {{detailAddaData[0].addaNo}}</div>
+                            <div class="col-3"><strong class="heading-strong">Brand Name:</strong> {{detailAddaData[0].brandDetails.brandName}}</div>
+                            <div class="col-3"><strong class="heading-strong">Design No:</strong> {{detailAddaData[0].designNo}}</div>
+                            <div class="col-3"><strong class="heading-strong">Product:</strong> {{detailAddaData[0].productCd.displayValue}}</div>
+                            <div class="col-3"><strong class="heading-strong">Quantity:</strong> {{detailAddaData[0].quantity}}</div>
+                            <div class="col-3"><strong class="heading-strong">Completion Date:</strong> {{detailAddaData[0].completionDate}}</div>
+                            <div class="col-3"><strong class="heading-strong">Status:</strong> {{detailAddaData[0].status.displayValue}}</div>
+                            <div class="col-3"><strong class="heading-strong">Remarks:</strong> {{detailAddaData[0].remarks}}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="table flex-row">
+                <div class="left wp-50 hv-50">
+                 <div class="material hv-70">
+                     <div class="its-card">
+                         <h6 class="card-header ps-3 d-flex justify-content-between">
+                         <span>Material</span> 
+                         <button class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="getSelectedData('')">Add Material</button>     
+                         </h6>                    
+                         <div class="finish-goods card-body flex-center">
+                             
+                             <div class="cloths mt-10">
+                                 <dx-data-grid id="gridContainer"
+                                         [dataSource]="addaMaterialData"
+                                         [showBorders]="true"
+                                         [rowAlternationEnabled]="true"
+                                         [allowColumnResizing]="true"
+                                         [allowColumnReordering]="true"
+                                     >
+                                 <dxo-scrolling mode="virtual"></dxo-scrolling>
+                                 <dxo-filter-row [visible]="true"></dxo-filter-row>
+                                 <dxo-header-filter [visible]="true"></dxo-header-filter>
+                                 <dxo-column-chooser [enabled]="true" mode="select" [allowSearch]="true"></dxo-column-chooser>
+                     
+                                 <dxo-group-panel [visible]="true"></dxo-group-panel>
+                                 <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+                         
+                                 <dxi-column dataField="stockDetails.stockName" caption="Name"></dxi-column>
+                                 <dxi-column dataField="stockDetails.unit.displayValue" caption="Unit"></dxi-column>  
+                                 <dxi-column dataField="quantity" caption="Qty"></dxi-column>
+                                 
+                                <dxi-column caption="Edit / Delete" cellTemplate="cellTemplateHyperlink" alignment="center"></dxi-column>  
+                                <div *dxTemplate="let data of 'cellTemplateHyperlink'">
+                                  <a data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="getSelectedData(data)">
+                                  <mat-icon class="me-2">edit</mat-icon>
+                                  </a>       
+                                  <mat-icon class="icon-mat" (click)="deleteMaterial(data.data)">delete</mat-icon>
+                                </div>
+     
+                                 <dxo-search-panel [visible]="true"></dxo-search-panel>
+                                 <dxo-paging [pageSize]="10"> </dxo-paging>              
+                                 </dx-data-grid>       
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+            
+                </div>
+                <div class="right wp-50 hv-50">
+                 <div class="pattern hv-70">
+                     <div class="its-card">
+                         <h6 class="card-header ps-3 d-flex justify-content-between">
+                         <span>Pattern</span> 
+                         
+                         <button class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#exampleModalPattern"  (click)="getSelectedData1('')">Add Pattern</button>
+                         </h6>                    
+                         <div class="finish-goods card-body flex-center">
+                              
+                             <div class="cloths mt-10">
+                                 <dx-data-grid id="gridContainer"
+                                         [dataSource]="addaPatternsData"
+                                         [showBorders]="true"
+                                         [rowAlternationEnabled]="true"
+                                         [allowColumnResizing]="true"
+                                         [allowColumnReordering]="true"
+                                     >
+                                 <dxo-scrolling mode="virtual"></dxo-scrolling>
+                                 <dxo-filter-row [visible]="true"></dxo-filter-row>
+                                 <dxo-header-filter [visible]="true"></dxo-header-filter>
+                                 <dxo-column-chooser [enabled]="true" mode="select" [allowSearch]="true"></dxo-column-chooser>
+                     
+                                 <dxo-group-panel [visible]="true"></dxo-group-panel>
+                                 <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+                         
+                                 <!-- <dxi-column dataField="color.displayValue" caption="Name"></dxi-column> -->
+                                 <dxi-column caption="Name" cellTemplate="cellTemplateHyperlink" alignment="left"></dxi-column>  
+                                 <div *dxTemplate="let data of 'cellTemplateHyperlink'">
+                                     <a [routerLink]="['../../bundle-adda', addaId, data?.data?.patternId, brandId]" routerLinkActive="sub-active" class="pattern-name">
+                                         <p>{{data.data.color.displayValue}}</p>
+                                     </a>     
+                                 </div>
+     
+                                 <dxi-column dataField="quantity" caption="Qty"></dxi-column>
+                                 <dxi-column dataField="size.displayValue" caption="Unit"></dxi-column>  
+                                 <dxi-column dataField="bundleSize" caption="Bundle Qty"></dxi-column>
+                                 
+                                <dxi-column caption="Edit / Delete" cellTemplate="cellTemplateHyperlink1" alignment="center"></dxi-column>  
+                                <div *dxTemplate="let data2 of 'cellTemplateHyperlink1'">
+                                  <a data-bs-toggle="modal" data-bs-target="#exampleModalPattern" (click)="getSelectedData1(data2)">
+                                  <mat-icon class="me-2">edit</mat-icon>
+                                  </a>       
+                                  <mat-icon class="icon-mat" (click)="deletePattern(data2.data)">delete</mat-icon>
+                                </div>
+                         
+                                 <dxo-search-panel [visible]="true"></dxo-search-panel>
+                                 <dxo-paging [pageSize]="10"> </dxo-paging>              
+                                 </dx-data-grid>       
+                             </div>
+     
+     
+                         </div>
+                     </div>
+                 </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+ 
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <app-adda-add-material [forEditAddaMaterial]="editAddaMaterialData" (forDetailAddReloadMaterial)="dataFromAddaMaterial($event)"></app-adda-add-material>
+      <!-- <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div> -->
+    </div>
+  </div>
+
+  <!-- For add pattern -->
+  <div class="modal fade" id="exampleModalPattern" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <app-adda-add-pattern [forEditAddaPattern]="editAddaPatternData" (forDetailAddReloadPattern)="dataFromAddaPattern($event)"></app-adda-add-pattern>
+    </div>
+  </div>
+ 

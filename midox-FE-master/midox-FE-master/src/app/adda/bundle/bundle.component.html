@@ -1,0 +1,107 @@
+
+<div class="its-card ">
+ <h3 class="card-header ps-3 d-flex justify-content-between">
+  <span>View Bundle</span> 
+		<div>
+			<div class="form-group">
+				<!-- <mat-form-field class="example-full-width"> -->
+						<!-- <mat-label>Select Adda*</mat-label> -->
+						<input type="text"
+												placeholder="Select Adda"
+												aria-label="Number"
+												matInput
+												[formControl]="myControlAdda"
+												[matAutocomplete]="auto" class="form-control"
+												>
+												<mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="optionSelectedAdda($event)" >
+								<mat-option *ngFor="let option of filteredOptionsAdda | async" [value]="option.addaNo">
+										{{option.addaNo}}
+								</mat-option>
+						</mat-autocomplete>
+				<!-- </mat-form-field> -->
+		</div>
+
+		</div>
+ </h3>
+    
+ <div class="card-body flex-center">        
+  <div class="flex-center">
+   <div class="flex-center">
+    <mat-spinner *ngIf=showSpinner diameter=125></mat-spinner>
+   </div> 
+   <div *ngIf=!showSpinner class="details-adda-parent wp-100">				
+				<div class="finish-goods card-body">
+					<div *ngIf="!showTable"><h2>Please select Adda</h2></div>
+					<div class="cloths mt-10" *ngIf="showTable">
+						<dx-data-grid id="gridContainer"
+								[dataSource]="bundleAddaData"
+								[showBorders]="true"
+								[rowAlternationEnabled]="true"
+								[allowColumnResizing]="true"
+								[allowColumnReordering]="true"
+							>
+							<dxo-scrolling mode="virtual"></dxo-scrolling>
+							<dxo-filter-row [visible]="true"></dxo-filter-row>
+							<dxo-header-filter [visible]="true"></dxo-header-filter>
+							<dxo-column-chooser [enabled]="true" mode="select" [allowSearch]="true"></dxo-column-chooser>
+							<dxo-group-panel [visible]="true"></dxo-group-panel>
+							<dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+							<dxi-column dataField="bundleName" caption="Bundle Name" [width]="150"></dxi-column>
+							<dxi-column dataField="quantity" caption="Qty" [alignment]="'left'"></dxi-column>  
+							<dxi-column caption="Status" cellTemplate="cellTemplateHyperlink2" alignment="left" [minWidth]="140"></dxi-column>  
+							<div *dxTemplate="let data of 'cellTemplateHyperlink2'">
+								<div class="employee-name" *ngIf="data.data.currentEmployeeId; else elseBlockStatus">
+								
+								<form>
+									<div class="form-group">
+												<select id="status" class="form-control" (change)="statusChangefn($event, data.data)">
+														<option *ngFor="let option of statusDropDownValue" [value]="option?.entityCd" [selected]="option?.entityCd == data?.data?.currentProcessStatus?.entityCd">{{ option?.displayValue }}</option>
+												</select>
+									</div>
+
+								</form>
+							</div>
+							<ng-template class="dropdown" #elseBlockStatus>						
+									{{data.data.currentProcessStatus.displayValue}}
+							</ng-template>
+							</div>
+							<dxi-column dataField="currentProcessCd.displayValue" caption="Process" [width]="150"></dxi-column>
+							<dxi-column caption="Select Employee" cellTemplate="cellTemplateHyperlink1" alignment="center" [minWidth]="170"></dxi-column>  
+							<div *dxTemplate="let data of 'cellTemplateHyperlink1'">
+								<div class="employee-name" *ngIf="data.data.currentEmployeeId; else elseBlockEmployee">{{data.data.currentEmployeeId.empName}}</div>
+								<ng-template class="dropdown" #elseBlockEmployee>
+									
+									<div class="form-group">
+										<!-- <mat-form-field class="example-full-width"> -->
+												<!-- <mat-label>Stock Name*</mat-label> -->
+												<input type="text"
+																		placeholder="Select Employee"
+																		aria-label="Number"
+																		matInput
+																		[formControl]="myControlEmployee"
+																		[matAutocomplete]="auto" class="form-control"
+																		>
+																		<mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="optionSelectedEmployee($event,data.data)" >
+														<mat-option *ngFor="let option of filteredOptionsEmployee | async" [value]="option.empName">
+																{{option.empName}}
+														</mat-option>
+												</mat-autocomplete>
+										<!-- </mat-form-field> -->
+								</div>
+								</ng-template>
+							</div>
+
+							<dxi-column caption="Job Card" cellTemplate="cellTemplateHyperlink" alignment="center"></dxi-column>  
+							<div *dxTemplate="let data of 'cellTemplateHyperlink'">
+								<mat-icon class="me-2" (click)="exportPdf(data)">print</mat-icon>
+							</div>
+																					
+							<dxo-search-panel [visible]="true"></dxo-search-panel>
+							<dxo-paging [pageSize]="10"> </dxo-paging>              
+						</dx-data-grid>       
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

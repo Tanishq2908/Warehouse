@@ -1,0 +1,47 @@
+<div class="its-card">
+    <h3 class="card-header ps-3">Add Product</h3>
+    <div class="settings-comp">
+      
+      <div class="form-input-sticky">
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="name">Add Product</label>
+            <input type="text" id="name" formControlName="name" class="form-control">
+            <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" class="error invalid-red">
+              Please enter a valid text.
+            </div>
+          </div> 
+          <div class="form-group mt-3">
+            <button type="submit" [disabled]="productForm.invalid" mat-flat-button color="primary">
+              {{ editedProductIndex !== null ? 'Update product' : 'Add product' }}
+            </button>
+          </div>
+        </form>
+
+      </div>
+
+      <div class="flex-center">
+        <mat-spinner *ngIf="showSpinner" diameter=125></mat-spinner>
+      </div>
+      
+      <table class="table mt-4" *ngIf="!showSpinner">
+        <thead>
+          <tr>
+            <th>Product Name</th> 
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of productArray; let i = index">
+            <td>{{ data.displayValue }}</td>
+            <td>
+              <button (click)="edit(data, i)" class="btn btn-sm btn-primary me-2">Edit</button>
+              <button (click)="delete(data)" class="btn btn-sm btn-danger" [disabled]="deleteBtnDisabled">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>    
+    </div>
+      
+    

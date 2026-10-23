@@ -1,0 +1,32 @@
+@import '../../sass/variables';
+
+:host ::ng-deep .dx-datagrid-headers{
+    background-color: $primary-color;
+    color: $white;
+}
+
+
+#gridContainer{
+    max-height: 80vh;
+}
+
+.its-card{
+    .form{
+        height: 85vh;
+        // display: flex;
+        overflow: auto;
+        // align-items: start;
+    }
+    
+}
+
+:host ::ng-deep  {
+    .mat-mdc-form-field-hint{
+        font-size: 12px;
+        margin-top: 3px;
+    }
+    
+    .mat-mdc-form-field-hint-wrapper{
+        padding: 0;
+    }
+}

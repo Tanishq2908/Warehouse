@@ -1,0 +1,31 @@
+<div class="its-card">
+    <h3 class="card-header ps-3">Login User</h3>
+    <div class="row pt-3">
+        
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="row login">
+                <div class="col-7">
+                <label for="username">Username:</label>
+                <input type="text" id="username" formControlName="username" class="form-control">
+                <div *ngIf="loginForm.get('username').invalid && loginForm.get('username').touched" class="invalid-red">
+                    Username is required.
+                </div>
+                </div>
+                <div class="col-7">
+                <label for="password">Password:</label>
+                <input type="password" id="password" formControlName="password" class="form-control">
+                <div *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched" class="invalid-red">
+                    Password is required.
+                </div>
+                </div>    
+            </div>
+
+            <div class="row">
+                <div class="col-12 text-center mt-10">                  
+                    <button type="submit" mat-flat-button color="primary" [disabled]="loginForm.invalid">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+  

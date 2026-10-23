@@ -1,0 +1,88 @@
+version: "3.9"
+
+# ── Warehouse Management System ───────────────────────────────────────────────
+# Development:   docker compose up
+# Production:    docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+# ──────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── MongoDB ─────────────────────────────────────────────────────────────────
+  mongo:
+    image: mongo:7
+    container_name: wms_mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: warehouse
+    ports:
+      - "27017:27017"          # remove this line in production
+    volumes:
+      - mongo_data:/data/db
+      - mongo_cfg:/data/configdb
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    networks:
+      - wms_net
+
+  # ── FastAPI backend ──────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: wms_backend
+    restart: unless-stopped
+    environment:
+      MONGO_URL: mongodb://mongo:27017
+      DB_NAME: warehouse
+      # Override JWT_SECRET in .env or docker-compose.override.yml — never commit the real value
+      JWT_SECRET: ${JWT_SECRET:-change-me-warehouse-2026-devsecret}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}          # optional — OCR won't work without it
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173,http://localhost,capacitor://localhost}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app          # live reload in dev; remove in prod
+      - uploads_data:/app/uploads
+    depends_on:
+      mongo:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - wms_net
+
+  # ── Vite dev server (hot-reload) ─────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: wms_frontend_dev
+    restart: unless-stopped
+    environment:
+      VITE_BACKEND_URL: http://localhost:8000
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules          # preserve node_modules inside container
+    depends_on:
+      - backend
+    networks:
+      - wms_net
+
+volumes:
+  mongo_data:
+  mongo_cfg:
+  uploads_data:
+
+networks:
+  wms_net:
+    driver: bridge

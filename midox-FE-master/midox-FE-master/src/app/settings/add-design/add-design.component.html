@@ -1,0 +1,126 @@
+<div class="its-card">
+    <h3 class="card-header ps-3">Add Design</h3>
+    
+    <div class="flex-center">
+      <mat-spinner *ngIf="showSpinner" diameter=125></mat-spinner>
+    </div>
+    <div class="settings-comp" *ngIf="!showSpinner">
+
+      <div [formGroup]="designReactiveForm">
+        <div class="row"> 
+          <!-- Brand -->
+          <div class="form-group col-4">
+            <label for="brandId">Select brand:*</label>
+            <select id="brandId" formControlName="brandId" class="form-control">              
+              <option value="">Select</option>
+              <option *ngFor="let option of brandDropdownValues" [value]="option.brandId">{{ option?.brandName }}</option>
+            </select>
+            <div *ngIf="designReactiveForm.get('brandId')?.invalid && designReactiveForm.get('brandId')?.touched">
+              <span style="color: red;">Brand is required.</span>
+            </div>
+          </div>
+        
+          <!-- Product -->
+          <div class="form-group col-4">
+            <label for="productCd">Select product:*</label>
+            <select id="productCd" formControlName="productCd" class="form-control">            
+              <option value="">Select</option>
+              <option *ngFor="let option of productDropdownValues" [value]="option.entityCd">{{ option.displayValue }}</option>
+            </select>
+            <div *ngIf="designReactiveForm.get('productCd')?.invalid && designReactiveForm.get('productCd')?.touched">
+              <span style="color: red;">Product is required.</span>
+            </div>
+          </div>
+
+          <!-- Status -->
+          <div class="form-group col-4">
+            <label for="status">Status* </label>
+              <select id="status" formControlName="status" class="form-control">
+                <option value="">Select</option>
+                <option *ngFor="let option of dropDownValue" [value]="option">{{ option }}</option>
+              </select>
+            <div *ngIf="designReactiveForm.get('status')?.invalid && designReactiveForm.get('status')?.touched" class="error invalid-red">
+              Please enter a valid text.
+            </div>
+          </div>
+          
+          <!-- Design number -->
+          <div class="form-group mt-2 col-4">
+            <label for="designNo">Design number:*</label>
+            <input type="text" id="designNo" formControlName="designNo" class="form-control">
+            <div *ngIf="designReactiveForm.get('designNo')?.invalid && designReactiveForm.get('designNo')?.touched">
+              <div *ngIf="designReactiveForm.get('designNo')?.hasError('required')">
+                <span style="color: red;">Design number is required.</span>
+              </div>
+              <div *ngIf="designReactiveForm.get('designNo')?.hasError('minlength')">
+                <span style="color: red;">Design number must be at least 3 characters long.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Details -->
+          <div class="form-group mt-2 col-4">
+            <label for="details">Details:*</label>
+            <input type="text" id="details" formControlName="details" class="form-control">
+            <div *ngIf="designReactiveForm.get('details')?.invalid && designReactiveForm.get('details')?.touched">
+              <div *ngIf="designReactiveForm.get('details')?.hasError('required')">
+                <span style="color: red;">Details is required.</span>
+              </div>
+              <div *ngIf="designReactiveForm.get('details')?.hasError('minlength')">
+                <span style="color: red;">Details must be at least 3 characters long.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group mt-3">
+            <button type="submit" (click)="onSubmit()" [disabled]="designReactiveForm.invalid" mat-flat-button color="primary">
+              {{ editedMaterialIndex !== null ? 'Update Design' : 'Add Design' }}
+            </button>
+          </div>
+        </div>
+      
+      </div>
+
+      
+      <div class="flex-center">
+        <mat-spinner *ngIf="showSpinnerTable" diameter=125></mat-spinner>
+      </div> 
+      <table class="table mt-4" *ngIf="!showSpinnerTable">
+        <thead>
+          <tr>
+            <th>Brand Value</th>
+            <th>Product Value</th>
+            <th>Status</th>
+            <th>Design Number</th>
+            <th>Details</th>
+            <th>Action</th>
+            <th>Process</th>
+          </tr>
+        </thead> 
+        <tbody>
+          <tr *ngFor="let entry of formEntries; let i = index">
+            <td>{{ entry.brandDetails?.brandName }}</td>
+            <td>{{ entry.productCd?.displayValue }}</td>
+            <td>{{ entry.status }}</td>
+            <td>{{ entry.designNo }}</td>
+            <td>{{ entry.details }}</td>
+            <td>
+              <button (click)="onEdit(i)" class="btn btn-sm me-2 btn-primary">Edit</button>
+              <!-- <button (click)="onDelete(i)" class="btn btn-sm btn-danger" [disabled]="deleteBtnDisabled">Delete</button> -->
+            </td>
+            <td>
+              <button (click)="selectProcess(entry)" [disabled]="processBtnDisabled" class="btn btn-sm me-2 btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">Select</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  <!-- Modal -->
+  <div class="modal fade modal-xl" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <app-process-modal [modalValue]="modalValue" (newItemEvent)="changeSpinner($event)"></app-process-modal>
+  </div>
+    
+</div>
+      
+    

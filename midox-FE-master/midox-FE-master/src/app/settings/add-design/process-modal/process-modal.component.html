@@ -1,0 +1,137 @@
+<div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Select Process</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      
+    <div class="flex-center"> 
+      <mat-spinner *ngIf="showSpinner" diameter=125></mat-spinner>
+    </div>
+      <div class="modal-body" *ngIf="!showSpinner">
+        <div class="design-value">
+          <div class="row">
+            <div class="form-group col-4">
+              <h6 class="font-weight-bold">Brand: {{modalValue?.brandDetails?.brandName}}</h6>
+            </div>
+            <div class="form-group col-4">
+              <h6 class="font-weight-bold">Product: {{modalValue?.productCd?.displayValue}}</h6>
+            </div>
+            <div class="form-group col-4">
+              <h6 class="font-weight-bold">Design No.: {{modalValue?.designNo}}</h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-comp mt-10">
+          <form [formGroup]="processModalForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <!-- Process -->
+              <div class="form-group col-4">
+                  <label for="processCd">Process*</label>
+                  <select id="processCd" formControlName="processCd" #mySelect class="form-control" (change)="onOptionSelected(mySelect)">              
+                    <option value="">Select</option>
+                    <option *ngFor="let option of processDropdownValues" [value]="option?.entityCd">{{ option?.displayValue }}</option>
+                    <!-- <option *ngFor="let option of processDropdownValues" [ngValue]="option" [value]="option?.entityCd">{{ option?.displayValue }}</option> -->
+                  </select>
+                  <div *ngIf="processModalForm.get('processCd')?.invalid && processModalForm.get('processCd')?.touched" class="error invalid-red">
+                    Please enter a valid option.
+                  </div>
+              </div>
+              
+              <!-- Priority -->
+              <div class="form-group col-4">
+                <label for="priority">Priority*</label>
+                <input type="number" id="priority" formControlName="priority" class="form-control">
+                <div *ngIf="processModalForm.get('priority')?.invalid && processModalForm.get('priority')?.touched" class="error invalid-red">
+                  Priority is required
+                </div>
+              </div>
+
+              <!-- Rate -->
+              <div class="form-group col-4">
+                <label for="ratePerPeice">Rate Per Peice*</label>
+                <input type="number" id="ratePerPeice" formControlName="ratePerPeice" class="form-control">
+                <div *ngIf="processModalForm.get('ratePerPeice')?.invalid && processModalForm.get('ratePerPeice')?.touched" class="error invalid-red">
+                  Rate is required
+                </div>
+              </div>
+
+              <!-- Details -->
+              <div class="form-group mt-2 col-4">
+                <label for="details">Details:*</label>
+                <input type="text" id="details" formControlName="details" class="form-control">
+                <div *ngIf="processModalForm.get('details')?.invalid && processModalForm.get('details')?.touched">
+                  <div *ngIf="processModalForm.get('details')?.hasError('required')">
+                    <span style="color: red;">Details is required.</span>
+                  </div>
+                  <div *ngIf="processModalForm.get('details')?.hasError('minlength')">
+                    <span style="color: red;">Details must be at least 3 characters long.</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Status -->
+              <div class="form-group mt-2 col-4">
+                <label for="status">Status* </label>
+                  <select id="status" formControlName="status" class="form-control">
+                    <option value="">Select</option>
+                    <option *ngFor="let option of dropDownValue" [value]="option">{{ option }}</option>
+                  </select>
+                <div *ngIf="processModalForm.get('status')?.invalid && processModalForm.get('status')?.touched" class="error invalid-red">
+                  Please enter a valid text.
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group mt-3">
+              <button type="submit" [disabled]="processModalForm.invalid" mat-flat-button color="primary">
+                {{ editedProcessModalIndex !== null ? 'Update Process' : 'Add Process' }}
+              </button>
+            </div>
+          </form>
+            
+            <table class="table mt-4">
+              <thead>
+                <tr>
+                  <th>Process</th>
+                  <th>Priority</th>
+                  <th>Rate</th>
+                  <th>Details</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead> 
+              <tbody>
+                <tr *ngFor="let data of processModalData; let i = index">
+                  <!-- <td>{{ data.processCd }}</td> -->
+                  <!-- <td>{{ data.processCd?.entityCd == null ? data.processCd : data.processCd?.displayValue }}</td> -->
+                  <td>{{ data.processCd?.entityCd == null ? data.processCdDisplayValue : data.processCd?.displayValue }}</td>
+                  <!-- <td>{{ data.processCd?.entityCd == null ? data.processCd : data.processCdDisplayValue }}</td> -->
+                  <td>{{ data.priority }}</td>
+                  <td>{{ data.ratePerPeice }}</td>
+                  <td>{{ data.details }}</td>
+                  <td>{{ data.status }}</td>
+                  <td>
+                    <button (click)="edit(data, i)" class="btn btn-sm me-2 btn-primary">Edit</button>
+                    <button (click)="delete(i)" class="btn btn-sm btn-danger" [disabled]="deleteBtnDisabled">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div> 
+          
+        <!-- </div> -->
+            
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="closeModalButton" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="apiCallSaveData()">
+          Save changes          
+          <!-- {{ updateChangesShow == false ? 'Save changes' : 'Update changes' }} -->
+        </button>
+      </div>
+    </div>
+  </div>

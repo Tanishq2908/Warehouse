@@ -1,0 +1,136 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$midox-primary: mat.define-palette(mat.$indigo-palette);
+$midox-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$midox-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$midox-theme: mat.define-light-theme((
+  color: (
+    primary: $midox-primary,
+    accent: $midox-accent,
+    warn: $midox-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($midox-theme);
+
+@import "bootstrap/scss/bootstrap";
+
+@import "devextreme/dist/css/dx.light.css";
+
+@import './app/sass/variables';
+@import './app/sass/helpers';
+
+/* Global style (Layout structure) */
+
+// ====================================================================================
+body,
+html {
+    height: 100%;
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    overflow: hidden;
+}
+
+/* Scrollbar style */
+body::-webkit-scrollbar,
+.activity-content-scroll::-webkit-scrollbar,
+*::-webkit-scrollbar
+{
+  width: 10px;
+  border-radius: 3px;
+  background-color: lightgray;
+}
+ 
+body::-webkit-scrollbar-thumb,
+.activity-content-scroll::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb
+{
+  background-color: darkgray;
+  border-radius: 5px;
+}
+
+
+/* Hyperlink */
+
+a {
+    text-decoration: none !important;
+    font-size: 1.6rem;
+    &:focus,
+    &:hover {
+        outline: none;
+    }
+}
+
+.row {
+    margin: 0;
+}
+  
+//-------------------Custom style----------------------
+.icon-mat {
+    font-size: 20px;
+    align-self: center;
+    margin-right: 5px !important;
+    height: 20px;
+}
+
+.submenu-link {
+    font-size: 18px;
+}
+
+.midox-menu.mat-mdc-menu-item {
+    min-height: 32px !important;
+    padding: 2px 10px;
+}
+
+.mat-mdc-menu-content {
+  padding: 8px;
+}
+
+// .its-card .card-header{
+//     padding: 6px 10px;
+//     background-color: #3F51B5;
+//     border-bottom: 1px solid #3F51B5;
+//     height: auto;
+// }
+// .its-card{
+//     margin: 1rem;
+//     border: 1px solid #3F51B5;
+//     border-radius: 5px;
+//     padding-bottom: 1rem;
+// }
+
+// .card-header{
+//     color: white;
+//     margin-bottom: 0.3rem;
+// }
+
+// .card-body{
+//     padding-left: 0.5rem;
+//     padding-right: 0.5rem;
+// }
+
+
+.cdk-overlay-container { z-index: 9999; }
+
+.mat-icon {
+  cursor: pointer;
+}

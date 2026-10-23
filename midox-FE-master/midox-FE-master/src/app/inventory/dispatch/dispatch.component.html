@@ -1,0 +1,63 @@
+<div class="its-card">
+  <h3 class="card-header ps-3">Dispatch Goods</h3>
+  <div class="row">
+    <form [formGroup]="dispatchInventoryForm" (ngSubmit)="onSubmit()">
+      <div class="col-6">
+        <label for="brand">Brand</label>
+        <select id="brand" formControlName="brand" class="form-control" required>
+          <option value="">Select</option>
+          <option *ngFor="let option of brandNamesData" [value]="option">{{ option }}</option>
+        </select>
+        <div
+          *ngIf="dispatchInventoryForm.controls.brand.invalid && (dispatchInventoryForm.controls.brand.dirty || dispatchInventoryForm.controls.brand.touched)"
+          class="invalid-red">
+          <div *ngIf="dispatchInventoryForm.controls.brand.errors.required">
+            brand is required.
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <label for="product">Product</label>
+        <select id="product" formControlName="product" class="form-control" required>
+          <option value="">Select</option>
+          <option *ngFor="let option of productData" [value]="option">{{ option }}</option>
+        </select>
+        <div
+          *ngIf="dispatchInventoryForm.controls.product.invalid && (dispatchInventoryForm.controls.product.dirty || dispatchInventoryForm.controls.product.touched)"
+          class="invalid-red">
+          <div *ngIf="dispatchInventoryForm.controls.product.errors.required">
+            product is required.
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <label for="designNumber">Design Number</label>
+        <select id="designNumber" formControlName="designNumber" class="form-control" required>
+          <option value="">Select</option>
+          <option *ngFor="let option of designNumberData" [value]="option">{{ option }}</option>
+        </select>
+        <div
+          *ngIf="dispatchInventoryForm.controls.designNumber.invalid && (dispatchInventoryForm.controls.designNumber.dirty || dispatchInventoryForm.controls.designNumber.touched)"
+          class="invalid-red">
+          <div *ngIf="dispatchInventoryForm.controls.designNumber.errors.required">
+            Design Number is required.
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" formControlName="quantity" class="form-control">
+        <div *ngIf="dispatchInventoryForm.controls.quantity.invalid && dispatchInventoryForm.controls.quantity.touched"
+          class="invalid-red">
+          <div *ngIf="dispatchInventoryForm.controls.quantity.errors.required">Quantity is required.</div>
+          <div *ngIf="dispatchInventoryForm.controls.quantity.errors.min">Quantity must be at least 1.</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-end">
+          <button type="submit" mat-flat-button color="primary" [disabled]="dispatchInventoryForm.invalid">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

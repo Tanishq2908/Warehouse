@@ -1,0 +1,61 @@
+<div class="its-card">
+  <h3 class="card-header ps-3">Stock History</h3>
+  <div class="form p-3 pt-4">
+    <div *ngIf="!isStockHistoryById || isCalendarVisible">
+      <form [formGroup]="dateSelectorGroup" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-3">
+            <mat-form-field class="w-100">
+              <mat-label>Enter a date range</mat-label>
+              <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate formControlName="startDate" placeholder="Start date">
+                <input matEndDate formControlName="endDate" placeholder="End date">
+              </mat-date-range-input>
+              <mat-hint class="hint text-muted">Date range should be less than 90 days</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group mt-3">
+            <button type="submit" [disabled]="dateSelectorGroup.invalid" mat-flat-button color="primary">Submit</button>
+          </div>
+        </div>
+      </form>
+      <hr *ngIf=isTable>
+    </div>
+    <div class="stock-history card-body flex-center">
+      <mat-spinner *ngIf=showSpinner diameter=125></mat-spinner>
+
+      <div *ngIf=isTable>
+        <div class="cloths mt-10" *ngIf="viewClothData.length">
+          <dx-data-grid id="gridContainer" [dataSource]="viewClothData" [showBorders]="true"
+            [rowAlternationEnabled]="true" [allowColumnResizing]="true" [allowColumnReordering]="true">
+            <dxo-scrolling mode="virtual"></dxo-scrolling>
+            <dxo-filter-row [visible]="true"></dxo-filter-row>
+            <dxo-header-filter [visible]="true"></dxo-header-filter>
+            <dxo-column-chooser [enabled]="true" mode="select" [allowSearch]="true"></dxo-column-chooser>
+
+            <dxo-group-panel [visible]="true"></dxo-group-panel>
+            <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+
+            <dxi-column dataField="stockDetails.materialCd.displayValue" caption="Cloth"></dxi-column>
+            <dxi-column dataField="stockDetails.subcategoryCd.displayValue" caption="Sub Category"></dxi-column>
+            <dxi-column dataField="stockDetails.unit.displayValue" caption="Measuring Unit"></dxi-column>
+            <dxi-column dataField="stockDetails.availableQuantity" caption="Available Qty"></dxi-column>
+            <dxi-column dataField="amount" caption="Amount"></dxi-column>
+            <!-- <dxi-column dataField="quantity" caption="Quantity"></dxi-column> -->
+            <dxi-column dataField="billNo" caption="Bill Number" [visible]="false"></dxi-column>
+            <dxi-column dataField="billDate" caption="Date" [visible]="false"></dxi-column>
+            <!-- <dxi-column dataField="packing_slip_number" caption="Packing Slip Number" [visible]="false"></dxi-column> -->
+            <dxi-column dataField="supplierDetails.supplierName" caption="Supplier Name" [visible]="false"></dxi-column>=
+            <dxi-column dataField="stockDetails.colorFabricCd.displayValue" caption="Color Fabric Code" [visible]="false"></dxi-column>
+
+            <dxo-search-panel [visible]="true"></dxo-search-panel>
+          </dx-data-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

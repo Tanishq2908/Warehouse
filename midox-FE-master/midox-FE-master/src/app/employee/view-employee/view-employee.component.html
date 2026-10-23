@@ -1,0 +1,49 @@
+<div class="its-card">
+    <h3 class="card-header ps-3">View Employee</h3>
+  
+    <div class="view-employee card-body flex-center">
+      <mat-spinner *ngIf=showSpinner diameter=125></mat-spinner>
+    
+      <div *ngIf=!showSpinner>
+          <div class="cloths mt-10">
+            <dx-data-grid id="gridContainer"
+                    [dataSource]="viewEmployeeData"
+                    [showBorders]="true"
+                    [rowAlternationEnabled]="true"
+                    [allowColumnResizing]="true"
+                    [allowColumnReordering]="true"
+                  >
+              <dxo-scrolling mode="virtual"></dxo-scrolling>
+              <dxo-filter-row [visible]="true"></dxo-filter-row>
+              <dxo-header-filter [visible]="true"></dxo-header-filter>
+              <dxo-column-chooser [enabled]="true" mode="select" [allowSearch]="true"></dxo-column-chooser>
+  
+              <dxo-group-panel [visible]="true"></dxo-group-panel>
+              <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+      
+              <dxi-column dataField="employeeName" caption="Employee Name"></dxi-column>
+              <dxi-column dataField="jobPending" caption="Job Pending"></dxi-column>
+              <dxi-column dataField="paid" caption="Paid"></dxi-column>
+              <dxi-column dataField="paymentDue" caption="Payment Due"></dxi-column>
+              
+              <dxi-column dataField="gender" caption="Gender" [visible]="false"></dxi-column>
+              <dxi-column dataField="employeeMobile" caption="Mobile" [visible]="false"></dxi-column>
+              <dxi-column dataField="dobEmployee" caption="DOB" [visible]="false"></dxi-column>
+              <dxi-column dataField="employeeAdhaar" caption="Adhaar" [visible]="false"></dxi-column>
+              <dxi-column dataField="employeeAddress" caption="Address" [visible]="false"></dxi-column>
+              
+              <dxi-column caption="Job History" cellTemplate="cellTemplateHyperlink" alignment="center"></dxi-column>  
+              <div *dxTemplate="let data of 'cellTemplateHyperlink'">
+                <a [routerLink]="['../job-history']" routerLinkActive="sub-active" (click)="getSelectedData(data)"><mat-icon>remove_red_eye</mat-icon></a>           
+                <!-- <a routerLinkActive="sub-active" (click)="getSelectedData(data)">Add/View</a>            -->
+  
+              </div>
+      
+              <dxo-search-panel [visible]="true"></dxo-search-panel>
+              <dxo-paging [pageSize]="10"> </dxo-paging>              
+            </dx-data-grid>       
+          </div>
+        </div>
+    </div>
+  
+  </div>

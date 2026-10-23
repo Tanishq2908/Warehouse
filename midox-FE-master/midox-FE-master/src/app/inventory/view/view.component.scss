@@ -1,0 +1,19 @@
+@import '../../sass/variables';
+
+:host ::ng-deep .dx-datagrid-headers{
+    background-color: $primary-color;
+    color: $white;
+}
+
+#gridContainer{
+    max-height: 70vh;
+}
+
+.its-card{
+    .view{
+        height: 85vh;
+        display: flex;
+        overflow: auto;
+        align-items: start;
+    }
+}

@@ -1,0 +1,85 @@
+<div class="its-card">
+    <h3 class="card-header ps-3">Profile Information</h3>
+    <div class="row pt-3">
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <div class="row profile-info">
+          <div class="col-6">
+            <label for="name">Name</label>
+            <input type="text" id="name" formControlName="name" class="form-control" required>
+            <div
+              *ngIf="profileForm.controls.name.invalid && (profileForm.controls.name.dirty || profileForm.controls.name.touched)"
+              class="invalid-red">
+              <div *ngIf="profileForm.controls.name.errors.required">
+                Employee Name is required.
+              </div>
+              <div *ngIf="profileForm.controls.name.errors.minlength">
+                Employee Name must be at least 3 characters long.
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="dob">Employee date of Birth</label>
+            <input type="date" id="dob" class="form-control" formControlName="dob" required>
+            <div
+              *ngIf="profileForm.controls.dob.invalid && (profileForm.controls.dob.dirty || profileForm.controls.dob.touched)">
+              <div *ngIf="profileForm.controls.dob.errors.required" class="invalid-red">
+                dob Employee of Birth is required.
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="aadhar">Aadhar Number</label>
+            <input type="text" id="aadhar" class="form-control" formControlName="aadhar" maxlength="12">
+            <div *ngIf="profileForm.controls.aadhar.invalid && profileForm.controls.aadhar.touched"
+              class="invalid-red">
+              <div *ngIf="profileForm.controls.aadhar.errors.required">Employee Adhaar is required.</div>
+              <div *ngIf="profileForm.controls.aadhar.errors.pattern">
+                Adhaar Number must be 12 digits long (Only numbers).
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="gender">Gender</label>
+            <select id="gender" formControlName="gender" class="form-control" required>
+              <option value="">Select</option>
+              <option value="Male">Male</option>
+              <option value="Femal">Female</option>
+              <option value="Other">Other</option>
+            </select>
+            <div
+              *ngIf="profileForm.controls.gender.invalid && (profileForm.controls.gender.dirty || profileForm.controls.gender.touched)"
+              class="invalid-red">
+              <div *ngIf="profileForm.controls.gender.errors.required">
+                Gender is required.
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="address">Address</label>
+            <!-- <input type="text-area" id="address" formControlName="address"> -->
+            <textarea id="address" formControlName="address" class="form-control"></textarea>
+            <div *ngIf="profileForm.controls.address.invalid && profileForm.controls.address.touched"
+              class="invalid-red">
+              <div *ngIf="profileForm.controls.address.errors.required">Employee Address is required.</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="mobile">Mobile Number</label>
+            <input type="text" id="mobile" formControlName="mobile" class="form-control" maxlength="10">
+            <div *ngIf="profileForm.controls.mobile.invalid && profileForm.controls.mobile.touched"
+              class="invalid-red">
+              <div *ngIf="profileForm.controls.mobile.errors.required">Employee Mobile is required.</div>
+              <div *ngIf="profileForm.controls.mobile.errors.pattern">
+                Mobile Number must be 10 digits long (Only numbers).
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 text-end">
+            <button type="submit" mat-flat-button color="primary" [disabled]="profileForm.invalid">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>

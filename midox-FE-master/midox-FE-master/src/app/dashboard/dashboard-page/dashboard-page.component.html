@@ -1,0 +1,170 @@
+<div class="dashboard-page">
+    <div class="row pb-4 pe-3">
+        <div class="row col-3">
+            <!-- <mat-spinner></mat-spinner> -->
+            <div class="row col-12 top-card">
+                <div class="col-9 card-detail">
+                    <span>Total Adda</span>
+                    <mat-spinner *ngIf=showSpinner diameter=25></mat-spinner>
+                    <span *ngIf=!showSpinner>500</span>
+                </div>
+                <div class="col-3">
+                    <span class="material-symbols-outlined icon-top">
+                        numbers
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row col-3">
+            <div class="row col-12 top-card">
+                <div class="col-9 card-detail">
+                    <span>Bundle</span>
+                    <mat-spinner *ngIf=showSpinner diameter=25></mat-spinner>
+                    <span *ngIf=!showSpinner>1500</span>
+                </div>
+                <div class="col-3">
+                    <span class="material-symbols-outlined icon-top">
+                        workspaces
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row col-3">
+            <div class="row col-12 top-card">
+                <div class="col-9 card-detail">
+                    <span>Employees</span>
+                    <mat-spinner *ngIf=showSpinner diameter=25></mat-spinner>
+                    <span *ngIf=!showSpinner>250</span>
+                </div>
+                <div class="col-3">
+                    <span class="material-symbols-outlined icon-top">
+                        diversity_1
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row col-3">
+            <div class="row col-12 top-card">
+                <div class="col-9 card-detail">
+                    <span>Job Card</span>
+                    <mat-spinner *ngIf=showSpinner diameter=25></mat-spinner>
+                    <span *ngIf=!showSpinner>3000</span>
+                </div>
+                <div class="col-3">
+                    <span class="material-symbols-outlined icon-top">
+                        redeem
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pb-4">
+        <div class="row col-3">
+            <div class="row p-0 card col-12 chart-card">
+                <div class="card-header">
+                    <strong>Bundle</strong>
+                </div>
+                <div class="card-body chart-body-1 flex-center">
+                    <mat-spinner *ngIf=showSpinner diameter=125></mat-spinner>
+                    <canvas *ngIf=!showSpinner baseChart class="chart" 
+                        [data]="pieChartData"
+                        [type]="pieChartType"
+                        [options]="pieChartOptions"
+                        [plugins]="pieChartPlugins">
+                    </canvas>
+                </div>
+            </div>  
+        </div>
+        <div class="row col-9">
+            <div class="row col-6 ps-0">
+                <div class="row p-0 card col-12 chart-card">
+                    <div class="card-header">
+                        <strong>Adda Completed Per Month</strong>
+                    </div>
+                    <div class="card-body chart-body-2 flex-center">
+                        <mat-spinner *ngIf=showSpinner diameter=125></mat-spinner>
+                        <canvas *ngIf=!showSpinner baseChart class="chart"
+                            [data]="barChartData"
+                            [options]="barChartOptions"
+                            [plugins]="barChartPlugins"
+                            [type]="barChartType"
+                            (chartHover)="chartHovered($event)">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="row col-6">
+                <div class="row p-0 card col-12 chart-card">
+                    <div class="card-header">
+                        <strong>Bundle</strong>
+                    </div>
+                    <div class="card-body chart-body-2 flex-center">
+                        <mat-spinner *ngIf=showSpinner diameter=125></mat-spinner>
+                        <canvas *ngIf=!showSpinner baseChart class="chart"
+                            [data]="barBundleChartData"
+                            [options]="barChartOptions"
+                            [plugins]="barChartPlugins"
+                            [type]="barChartType"
+                            (chartHover)="chartHovered($event)">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="row col-3">
+            <div class="row p-0 card col-12 chart-card">
+                <div class="card-header">
+                    <strong>Cloth</strong>
+                </div>
+                <div class="card-body chart-body-1 flex-center">
+                    <mat-spinner *ngIf=showSpinner diameter=125></mat-spinner>
+                    <canvas *ngIf=!showSpinner baseChart class="chart" 
+                        [data]="pieChartData"
+                        [type]="pieChartType"
+                        [options]="pieChartOptions"
+                        [plugins]="pieChartPlugins">
+                    </canvas>
+                </div>
+            </div>  
+        </div>
+        <div class="row col-9">
+            <div class="row col-6 ps-0">
+                <div class="row p-0 card col-12 chart-card">
+                    <div class="card-header">
+                        <strong>Accessories</strong>
+                    </div>
+                    <div class="card-body chart-body-2 flex-center">
+                        <mat-spinner *ngIf=showSpinner diameter=125></mat-spinner>
+                        <canvas *ngIf=!showSpinner baseChart class="chart"
+                            [data]="barChartData"
+                            [options]="barChartOptions"
+                            [plugins]="barChartPlugins"
+                            [type]="barChartType"
+                            (chartHover)="chartHovered($event)">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="row col-6">
+                <div class="row p-0 card col-12 chart-card">
+                    <div class="card-header">
+                        <strong>Dispatch</strong>
+                    </div>
+                    <div class="card-body chart-body-2 flex-center">
+                        <mat-spinner *ngIf=showSpinner diameter=125></mat-spinner>
+                        <canvas *ngIf=!showSpinner baseChart class="chart"
+                            [datasets]="barStackedChartData"
+                            [labels]="barChartLabels"
+                            [options]="barChartOptions"
+                            [plugins]="barChartPlugins"
+                            [type]="barChartType"
+                            (chartHover)="chartHovered($event)">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

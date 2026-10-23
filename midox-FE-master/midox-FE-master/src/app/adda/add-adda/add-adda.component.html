@@ -1,0 +1,119 @@
+<div class="its-card">
+  <h3 class="card-header ps-3 d-flex justify-content-between">
+    <span>{{addaTitle}}</span>
+    <button type="button" class="btn-close" id="addAddaModalBtn" data-bs-dismiss="modal" aria-label="Close"></button>
+  </h3>
+
+
+  <div class="row pt-3">
+    
+    <div class="flex-center">
+      <mat-spinner *ngIf=showSpinner diameter=125></mat-spinner>
+    </div> 
+    <form [formGroup]="addAddaForm" (ngSubmit)="onSubmit()" *ngIf=!showSpinner>
+      <div class="row add-adda">
+                
+        <!-- addaNo -->
+        <div class="form-group col-3">
+          <label for="addaNo">Adda no</label>
+          <input type="text" id="addaNo" formControlName="addaNo" class="form-control"/>
+          <div *ngIf="addAddaForm.get('addaNo')?.invalid && addAddaForm.get('addaNo')?.touched" class="error invalid-red">
+            <div *ngIf="addAddaForm.get('addaNo')?.errors?.['required']">
+              Adda no is required.
+            </div>
+            <div *ngIf="addAddaForm.get('addaNo')?.errors?.['minlength']">
+              Adda no must be at least 3 characters long.
+            </div>
+          </div>
+        </div>
+        
+        <!-- Brand -->
+        <div class="form-group col-3">
+          <label for="brandId">Brand</label>
+          <select id="brandId" formControlName="brandId" class="form-control" required (change)="getDesignFn($event.target)">
+            <option value="">Select</option>
+            <option *ngFor="let option of brandNamesData" [value]="option?.brandId">{{ option?.brandName }}</option>
+          </select>
+          <div
+            *ngIf="addAddaForm.get('brandId')?.invalid && (addAddaForm.get('brandId')?.dirty || addAddaForm.get('brandId')?.touched)"
+            class="invalid-red">
+            <div *ngIf="addAddaForm.get('brandId')?.errors?.['required']">
+              brand id is required.
+            </div>
+          </div>
+        </div>
+
+        <!-- Design number -->
+        <div class="form-group col-3">
+          <label for="designId">Design</label>
+          <select id="designId" formControlName="designId" class="form-control" required>
+            <option value="">Select</option>
+            <option *ngFor="let option of designNumberData" [value]="option?.designId">{{ option?.designNo }}</option>
+          </select>
+          <div
+            *ngIf="addAddaForm.get('designId')?.invalid && (addAddaForm.get('designId')?.dirty || addAddaForm.get('designId')?.touched)"
+            class="invalid-red">
+            <div *ngIf="addAddaForm.get('designId')?.errors?.['required']">
+              Design id is required.
+            </div>
+          </div>
+        </div>
+        
+        <!-- Quantity -->
+        <div class="form-group col-3">
+          <label for="quantity">Quantity</label>
+          <input type="number" id="quantity" formControlName="quantity" class="form-control">
+          <div *ngIf="addAddaForm.get('quantity')?.invalid && addAddaForm.get('quantity')?.touched"
+            class="invalid-red">
+            <div *ngIf="addAddaForm.get('quantity')?.errors?.['required']">Quantity is required.</div>
+            <div *ngIf="addAddaForm.get('quantity')?.errors?.['min']">Quantity must be at least 1.</div>
+          </div>
+        </div>
+
+        <!-- Remarks -->
+        <div class="form-group col-3">
+          <label for="remarks">Remarks</label>
+          <textarea name="" id="remarks" cols="30" rows="1" formControlName="remarks" class="form-control"></textarea>          
+          <div *ngIf="addAddaForm.get('remarks')?.invalid && addAddaForm.get('remarks')?.touched" class="error invalid-red">
+            <div *ngIf="addAddaForm.get('remarks')?.errors?.['required']">
+              Remarks is required.
+            </div>
+            <div *ngIf="addAddaForm.get('remarks')?.errors?.['minlength']">
+              Remarks must be at least 3 characters long.
+            </div>
+          </div>
+        </div> 
+
+        <!-- Completion date -->
+        <div class="form-group col-3">
+            <label for="completionDate">Completion date</label>
+            <input type="date" id="completionDate" class="form-control" formControlName="completionDate" required>
+            <div
+              *ngIf="addAddaForm.get('completionDate')?.invalid && (addAddaForm.get('completionDate')?.dirty || addAddaForm.get('completionDate')?.touched)">
+              <div *ngIf="addAddaForm.get('completionDate')?.errors?.['required']" class="invalid-red">
+                Completion date is required.
+              </div>
+            </div>
+        </div> 
+
+        <!-- Status -->
+        <div class="form-group col-3">
+          <label for="status">Status </label>
+            <select id="status" formControlName="status" class="form-control">
+              <option value="">Select</option>
+              <option *ngFor="let option of statusDropDownValue" [value]="option?.entityCd">{{ option?.displayValue }}</option>
+            </select>
+          <div *ngIf="addAddaForm.get('status')?.invalid && addAddaForm.get('status')?.touched" class="error invalid-red">
+            Please select a valid input.
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-12 text-end">
+            <button type="submit" mat-flat-button color="primary" [disabled]="addAddaForm.invalid">Submit</button>
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </div>

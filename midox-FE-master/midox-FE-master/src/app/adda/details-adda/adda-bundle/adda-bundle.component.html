@@ -1,0 +1,160 @@
+
+<div class="its-card">
+ <h3 class="card-header ps-3 d-flex justify-content-between">
+      <span>Bundle</span> 
+ </h3>
+    
+ <div class="card-body flex-center">        
+  <div class="flex-center">
+   <div class="flex-center">
+    <mat-spinner *ngIf=showSpinner diameter=125></mat-spinner>
+   </div> 
+   <div *ngIf=!showSpinner class="details-adda-parent wp-100">
+    <div class="adda-full-details wp-100">
+              <div class="accordion card-body" id="accordionExample">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <strong>Full details</strong>
+                      </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                        <div class="row">
+                          <div class="col-3"><strong class="heading-strong">Adda No :</strong> {{detailAddaData[0].addaNo}}</div>
+                          <div class="col-3"><strong class="heading-strong">Brand Name:</strong> {{detailAddaData[0].brandDetails.brandName}}</div>
+                          <div class="col-3"><strong class="heading-strong">Design No:</strong> {{detailAddaData[0].designNo}}</div>
+                          <div class="col-3"><strong class="heading-strong">Product:</strong> {{detailAddaData[0].productCd.displayValue}}</div>
+                          <div class="col-3"><strong class="heading-strong">Quantity:</strong> {{detailAddaData[0].quantity}}</div>
+                          <div class="col-3"><strong class="heading-strong">Completion Date:</strong> {{detailAddaData[0].completionDate}}</div>
+                          <div class="col-3"><strong class="heading-strong">Status Adda:</strong> {{detailAddaData[0].status.displayValue}}</div>
+                          <div class="col-3"><strong class="heading-strong">Pattern Id:</strong> {{bundleAddaData[0].patternId}}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+    </div>
+            
+    <div class="row">
+     <div class="col-8 p-0">                    
+      <div class="its-card hv-55">
+       <h6 class="card-header ps-3 d-flex justify-content-between">
+       <span>Bundle Information</span> 
+       <button class="btn btn-warning btn-xs" (click)="printStickerFn()">Print Sticker</button>
+       </h6>
+       <div class="finish-goods card-body">
+        <div class="cloths mt-10">
+         <dx-data-grid id="gridContainer"
+           [dataSource]="bundleAddaData"
+           [showBorders]="true"
+           [rowAlternationEnabled]="true"
+           [allowColumnResizing]="true"
+           [allowColumnReordering]="true"
+          >
+          <dxo-scrolling mode="virtual"></dxo-scrolling>
+          <dxo-filter-row [visible]="true"></dxo-filter-row>
+          <dxo-header-filter [visible]="true"></dxo-header-filter>
+          <dxo-column-chooser [enabled]="true" mode="select" [allowSearch]="true"></dxo-column-chooser>
+          <dxo-group-panel [visible]="true"></dxo-group-panel>
+          <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+          <dxi-column dataField="bundleName" caption="Bundle Name" [width]="150"></dxi-column>
+          <dxi-column dataField="quantity" caption="Qty" [alignment]="'left'"></dxi-column>  
+          <dxi-column caption="Status" cellTemplate="cellTemplateHyperlink2" alignment="left" [minWidth]="140"></dxi-column>  
+          <div *dxTemplate="let data of 'cellTemplateHyperlink2'">
+											<div class="employee-name" *ngIf="data.data.currentEmployeeId; else elseBlockStatus">
+											
+											<form>
+												<div class="form-group">
+															<select id="status" class="form-control" (change)="statusChangefn($event, data.data)">
+																	<option *ngFor="let option of statusDropDownValue" [value]="option?.entityCd" [selected]="option?.entityCd == data?.data?.currentProcessStatus?.entityCd">{{ option?.displayValue }}</option>
+															</select>
+												</div>
+
+											</form>
+										</div>
+										<ng-template class="dropdown" #elseBlockStatus>						
+												{{data?.data?.currentProcessStatus?.displayValue? data?.data?.currentProcessStatus?.displayValue:'Completed'}}
+										</ng-template>
+          </div>
+
+          <dxi-column dataField="currentProcessCd.displayValue" caption="Process" [width]="150"></dxi-column>
+          <dxi-column caption="Select Employee" cellTemplate="cellTemplateHyperlink1" alignment="center" [minWidth]="170"></dxi-column>  
+          <div *dxTemplate="let data of 'cellTemplateHyperlink1'">
+						<div class="employee-name" *ngIf="data.data.currentEmployeeId; else elseBlockEmployee">{{data.data.currentEmployeeId.empName}}</div>
+						<ng-template class="dropdown" #elseBlockEmployee>												
+              <div class="form-group" *ngIf="data.data.currentProcessCd != null">
+                            <!-- <mat-form-field class="example-full-width"> -->
+                                <!-- <mat-label>Stock Name*</mat-label> -->
+                                <input type="text"
+                                            placeholder="Select Employee"
+                                            aria-label="Number"
+                                            matInput
+                                            [formControl]="myControlEmployee"
+                                            [matAutocomplete]="auto" class="form-control"
+                                            >
+                                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="optionSelectedEmployee($event,data.data)" >
+                                    <mat-option *ngFor="let option of filteredOptionsEmployee | async" [value]="option.empName">
+                                        {{option.empName}} <br> <span class="employeeIdOptions">Emp id: {{option.empId}}</span>
+                                        <!-- {{option.empName}} (Id: {{option.empId}}) -->
+                                    </mat-option>
+                                </mat-autocomplete>
+                            <!-- </mat-form-field> -->
+              </div>
+						</ng-template>
+          </div>
+
+          <dxi-column caption="Job Card" cellTemplate="cellTemplateHyperlink" alignment="center"></dxi-column>  
+          <div *dxTemplate="let data of 'cellTemplateHyperlink'">
+            <button mat-icon-button (click)="exportPdf(data)" [disabled]="data.data.currentEmployeeId? false:true">
+              <mat-icon class="me-2">print</mat-icon>
+            </button>
+          </div> 
+                        
+          <dxo-search-panel [visible]="true"></dxo-search-panel>
+          <dxo-paging [pageSize]="10"> </dxo-paging>              
+         </dx-data-grid>       
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="col-4 p-0">
+                    <div class="its-card hv-55">
+                        <h6 class="card-header ps-3 d-flex justify-content-between">
+                        <span>Process Information</span> 
+                        </h6>
+                        
+                        <div class="finish-goods card-body">
+                            <div class="cloths mt-10">
+                            <dx-data-grid id="gridContainer"
+                                    [dataSource]="processData"
+                                    [showBorders]="true"
+                                    [rowAlternationEnabled]="true"
+                                    [allowColumnResizing]="true"
+                                    [allowColumnReordering]="true"
+                                    >
+                                <dxo-scrolling mode="virtual"></dxo-scrolling>
+                                <dxo-filter-row [visible]="true"></dxo-filter-row>
+                                <dxo-header-filter [visible]="true"></dxo-header-filter>
+                                <dxo-column-chooser [enabled]="true" mode="select" [allowSearch]="true"></dxo-column-chooser>                    
+                                <dxo-group-panel [visible]="true"></dxo-group-panel>
+                                <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+                        
+                                <!-- <dxi-column dataField="" caption="S. No."></dxi-column> -->
+                                <dxi-column dataField="processCd.displayValue" caption="Process Name" [width]="180"></dxi-column>
+                                <dxi-column dataField="priority" caption="Priority" [alignment]="'left'"></dxi-column>  
+                                <dxi-column dataField="details" caption="Details"></dxi-column>  
+                                                        
+                                <dxo-search-panel [visible]="true"></dxo-search-panel>
+                                <dxo-paging [pageSize]="10"> </dxo-paging>              
+                            </dx-data-grid>       
+                            </div>
+                        </div>
+                    </div>
+
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>

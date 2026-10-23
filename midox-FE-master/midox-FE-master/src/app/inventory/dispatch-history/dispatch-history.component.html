@@ -1,0 +1,35 @@
+<div class="its-card">
+  <h3 class="card-header ps-3">Dispatch History</h3>
+  <div class="dispatch-history card-body flex-center">
+      <mat-spinner *ngIf=showSpinner diameter=125></mat-spinner>
+    
+      <div *ngIf=!showSpinner>
+          <div class="cloths mt-10">
+            <dx-data-grid id="gridContainer"
+                    [dataSource]="viewFinishGoodsData"
+                    [showBorders]="true"
+                    [rowAlternationEnabled]="true"
+                    [allowColumnResizing]="true"
+                    [allowColumnReordering]="true"
+                  >
+              <dxo-scrolling mode="virtual"></dxo-scrolling>
+              <dxo-filter-row [visible]="true"></dxo-filter-row>
+              <dxo-header-filter [visible]="true"></dxo-header-filter>
+              <dxo-column-chooser [enabled]="true" mode="select" [allowSearch]="true"></dxo-column-chooser>
+
+              <dxo-group-panel [visible]="true"></dxo-group-panel>
+              <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+      
+              <dxi-column dataField="brand" caption="Brand"></dxi-column>
+              <dxi-column dataField="product" caption="Product"></dxi-column>
+              <dxi-column dataField="design" caption="Design"></dxi-column>
+              <dxi-column dataField="dispatch_date" caption="Dispatch Date"></dxi-column>
+              <dxi-column dataField="avl_qty" caption="Quantity"></dxi-column>  
+      
+              <dxo-search-panel [visible]="true"></dxo-search-panel>
+              <dxo-paging [pageSize]="10"> </dxo-paging>              
+            </dx-data-grid>       
+          </div>
+        </div>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="its-card">
+    <h3 class="card-header ps-3">Add Color</h3>
+    <div class="settings-comp">
+      
+      <div class="form-input-sticky">
+        <form [formGroup]="colorForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="name">Color Name</label>
+            <input type="text" id="name" formControlName="name" class="form-control">
+            <div *ngIf="colorForm.get('name')?.invalid && colorForm.get('name')?.touched" class="error invalid-red">
+              Please enter a valid text.
+            </div>
+          </div> 
+          <div class="form-group mt-3">
+            <button type="submit" [disabled]="colorForm.invalid" mat-flat-button color="primary">
+              {{ editedColorIndex !== null ? 'Update Color' : 'Add Color' }}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="flex-center">
+        <mat-spinner *ngIf="showSpinner" diameter=125></mat-spinner>
+      </div>
+      
+      <table class="table mt-4" *ngIf="!showSpinner">
+        <thead> 
+          <tr>
+            <th>Color Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of colorArray; let i = index">
+            <td>{{ data.displayValue }}</td>
+            <td>
+              <button (click)="edit(data, i)" class="btn btn-sm btn-primary me-2">Edit</button>
+              <button (click)="delete(data)" class="btn btn-sm btn-danger" [disabled]="deleteBtnDisabled">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    </div>
+      
+    
